@@ -1,0 +1,144 @@
+---
+title: "Problem Set 2"
+author: "Denits Panova, Thomas Vicente ,Felix Gutmann"
+date: "15 May 2016"
+output: pdf_document
+---
+
+### Problem 1
+
+## a)
+
+***(1)***
+
+Define the utilities as:
+$$
+\begin{aligned}
+U_i(A) &:= \alpha + d_i^Aa \\
+U_i(B) &:= \beta + d_i^Bb, 
+\end{aligned}
+$$
+where $\alpha$, $\beta$ $\ge$ $0$ and $d_i^*a$ is the number ...
+
+Best reply:
+$$
+\begin{aligned}
+U_i(A) > U_i(B)
+\end{aligned}
+$$
+Substitute the definition of the utilities in the last equation:
+$$
+\begin{aligned}
+\alpha + d_i^Aa > \beta + d_i^Bb
+\end{aligned}
+$$
+Define $d_i$ and rephrase it:
+$$
+\begin{aligned}
+d_i := d_i^A + d_i^B \\
+\underbrace{\frac{d_i^A}{d_i}}_{f_i} + \underbrace{\frac{d_i^B}{d_i}}_{(1-f_i)} = 1 
+\end{aligned}
+$$
+Using the last identity we can write the the inequality in the following way:
+$$
+\begin{aligned}
+\alpha + f_ia > \beta +(1-f_i) b \\
+f_i(a+b) \ge  \beta + b - \alpha \\
+f_i \ge \frac{(\beta - \alpha) + b}{b+a} \in [0,1]
+\end{aligned}
+$$
+Let $p_A=\frac{(\beta - \alpha) + b}{b+a}$ and $p_B=(1-p_A)=\frac{(\alpha - \beta) + a}{b+a}$. So best response is to choose A **iff** at least $p_A$ of its friends chhose A. 
+
+***(b)***
+
+The Nash-Equilibrium (NE) appears when:
+
+* any node i that chooses A has at least $p_A$ friends who also choose A
+* any node i that chooses B has at least $p_B$ friend who also choose B
+
+***(c)***
+
+Let $C_p$ a p-cluster and $C_p \subset G$. In the p-clustering sense we can say that NE occurs if i chooses A then $i \in C_A$, where $C_A$ is a $p_A$-cluster and if i chooses B  then $i \in C_B$, where $C_B$ is a $p_B$-cluster. 
+
+## b)
+
+Set $\alpha=\beta=0$. Each nodes starts with B. Let $t=q=\frac{1}{2}$ for switching to A. 
+
+***(b1)***
+
+Let $S=\{e-f\}$, where S is the starting set meaning that the two nodes initially adopt behaviour A. 
+
+!!!!! FOR FELIX !!!!!! put in a graph or leave some space for drawing one #Denisisthebest 
+
+***(b2)***
+
+The Blocking set is $BS:=\{ g,j \}$, with density $D=\frac{2}{3}$. 
+
+## c) 
+
+!!!! DENI WILL PAINT SOME MORE STUFF!!!
+
+## d)
+
+No we can't have the same Nash-Equilibria, because when we have a tie we are more likely to choose one of them namely to choose the one which has bigger initial values ($\alpha$ or $\beta$). 
+
+### Problem 2
+
+***(2.1.a)***
+
+Step 1:
+$h_{A_i}^{(1)}=2h_{C_i}^{(1)}=\frac{1}{8}$
+$a_{B_i}^{(1)}=\frac{3}{8}$ 
+$a_{D}^{(1)}=\frac{5}{8}$ 
+Step 2:
+$h_{A_i}^{(2)}=\frac{9}{8}$
+$a_{B_i}^{(2)}=\frac{27}{8}$ 
+$h_{C_i}^{(2)}=\frac{5}{8}$
+$a_{D}^{(2)}=\frac{25}{8}$ 
+Conclusion:
+$a_{B_i}^{(2)}>a_{D}^{(2)}$ 
+even from the second iteration there is a difference between the authority meassures of the two different nodes. 
+***(2.1.b)***
+
+We define the formulas for the two sub-graphs separatly. The first sub-graph consists of A's and B's. Let $b:=\text{number of B's}$ and $a:=\text{number of A's}$ and $c=\text{constant}=\frac{1}{8}$. For
+Step $k=1$: 
+$h^{(1)}=a^0b^0c = c$
+$a^{(1)}=ab^0c$
+Step $k=2$: 
+$h^{(2)}=a^{(1)}b =bab^0c = b^{(k-1)}a^{(k-1)}c$
+$a^{(2)}=abab^0c=a^{(k)}b^{(k-1)}c$
+Step $k=3$: 
+$h^{(3)}=a^{(2)}b = a^{(k-1)}b^{(k-2)}bc = a^{(k-1)}b^{(k-1)}bc$
+$a^{(3)}=aa^{(k-1)}b^{(k-1)}c=a^{(k)}b^{(k-1)}c$
+In general we define:
+$h_{A_i}^{(k)}:=a^{(k-1)}b^{(k-1)}bc$
+$a_{B_i}^{(k)}:=a^{(k)}b^{(k-1)}c$
+
+for the secon sub-graph 
+Step $k=1$: 
+$h^{(1)}= c$
+$a^{(1)}=5c$
+Step $k=2$: 
+$h^{(2)}=5c=5^{(k-1)}c$
+$a^{(2)}=5*5c=5^{k}c$
+In general we define:
+$h_{C_i}^{(k)}=5^{(k-1)}c$
+$a_{D}^{(k)}=5^{k}c$
+
+***(2.1.c)***
+
+Let the normalizing constant be 
+$$
+\begin{aligned}
+const_h&=3[a^{k-1}b^{k-1}c] +5 5^{k-1}c \\
+&=3 3^{2k-2} c + 5^{k}c \\
+&=(3^{2k-1}+5^k)c
+\end{aligned}
+$$
+The normalized version of the hub meassure is:
+$$
+\begin{aligned}
+\widehat{h_{A_i}}&=\frac{h_{A_i}}{const_h} \\
+&\propto \frac{9^k}{(3^{2k-1}+5^k)}
+\end{aligned}
+$$
