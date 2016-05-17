@@ -3,224 +3,378 @@ title: "Problem Set 2"
 author: "Denits Panova, Thomas Vicente ,Felix Gutmann"
 date: "15 May 2016"
 output: pdf_document
+header-includes: \usepackage{bm}
+                 \usepackage{bbm}
+                 \usepackage{algorithmic}
+                 \usepackage{algorithm}
+                 \usepackage{graphicx}
 ---
 
 ### Problem 1
 
 ## a)
 
-***(1)***
+**a.1.)**
 
-Define the utilities as:
+We start by defining the utility functions for A and B as follows:
 $$
 \begin{aligned}
 U_i(A) &:= \alpha + d_i^Aa \\
 U_i(B) &:= \beta + d_i^Bb, 
 \end{aligned}
 $$
-where $\alpha$, $\beta$ $\ge$ $0$ and $d_i^*a$ is the number ...
+where $\alpha$, $\beta$ $\ge$ $0$ and $d_i^*a$ is the number of neighbhours that have chosen A or B.
 
-Best reply:
+Using both we derive the best reply. In doing so, start with defining the following inequality (1):
 $$
 \begin{aligned}
 U_i(A) > U_i(B)
 \end{aligned}
 $$
-Substitute the definition of the utilities in the last equation:
+Proceed by substituting the definition of the utility functions in the last inequality:
 $$
 \begin{aligned}
 \alpha + d_i^Aa > \beta + d_i^Bb
 \end{aligned}
 $$
-Define $d_i$ and rephrase it:
+Define $d_i$ to be the sum of $d_i^A$ and $d_i^B$  and rephrase it slightly:
 $$
 \begin{aligned}
-d_i := d_i^A + d_i^B \\
-\underbrace{\frac{d_i^A}{d_i}}_{f_i} + \underbrace{\frac{d_i^B}{d_i}}_{(1-f_i)} = 1 
+d_i&:=d_i^A + d_i^B  \\
+d_i^B &= d_i - d_i^A 
 \end{aligned}
 $$
-Using the last identity we can write the the inequality in the following way:
+By substituting the last identity in (1) we can rexpress it in the following way:
 $$
 \begin{aligned}
-\alpha + f_ia > \beta +(1-f_i) b \\
-f_i(a+b) \ge  \beta + b - \alpha \\
-f_i \ge \frac{(\beta - \alpha) + b}{b+a} \in [0,1]
+\alpha +  a d_i^A  &> \beta + b(d_i - d_i^A) \\
+d_i^A(a+b) &\ge  \beta - \alpha +b d_i \\
+d_i^A &\ge \frac{\beta - \alpha +b d_i}{b+a}, 
 \end{aligned}
 $$
-Let $p_A=\frac{(\beta - \alpha) + b}{b+a}$ and $p_B=(1-p_A)=\frac{(\alpha - \beta) + a}{b+a}$. So best response is to choose A **iff** at least $p_A$ of its friends chhose A. 
 
-***(b)***
+**Conclusion:**
 
-The Nash-Equilibrium (NE) appears when:
+$\hspace{0.3cm}$ $\implies$ The best response is to choose A **iff** the former inequality is satisfied.
+  
+We repeat this for B. As inequality we get:
+$$
+\begin{aligned}
+d_i^B &\ge \frac{\alpha - \beta +a d_i}{b+a}, 
+\end{aligned}
+$$
 
-* any node i that chooses A has at least $p_A$ friends who also choose A
-* any node i that chooses B has at least $p_B$ friend who also choose B
+**a.2.)**
 
-***(c)***
+The Nash-Equilibrium (NE) appears when the incentive $\beta$ is bigger than the incentive $\alpha$ or when $b$, which is how much we value the friend who have chosen $b$.
 
-Let $C_p$ a p-cluster and $C_p \subset G$. In the p-clustering sense we can say that NE occurs if i chooses A then $i \in C_A$, where $C_A$ is a $p_A$-cluster and if i chooses B  then $i \in C_B$, where $C_B$ is a $p_B$-cluster. 
+**a.3.)**
+
+We can not explain with a p-cluster, because the best response is based on $d_i$ and therefore is not constant. If $\alpha$'s and $\beta$'s are zero then we can represent Nash-Equilibria as p-clusters.  
 
 ## b)
 
 Set $\alpha=\beta=0$. Each nodes starts with B. Let $t=q=\frac{1}{2}$ for switching to A. 
 
-***(b1)***
+**b.1.)**
 
-Let $S=\{e-f\}$, where S is the starting set meaning that the two nodes initially adopt behaviour A. 
+Let $S=\{e-f\}$, where $S$ is the starting set meaning that the two nodes initially adopt behaviour A. 
 
-!!!!! FOR FELIX !!!!!! put in a graph or leave some space for drawing one #Denisisthebest 
+**Figure 1** \
 
-***(b2)***
+!["Plot1"](/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/01.png)
 
-The Blocking set is $BS:=\{ g,j \}$, with density $D=\frac{2}{3}$. 
+
+**b.2.)**
+
+Let $q=\frac{2}{5}$, belonging to $\left(\frac{1}{3},\frac{1}{2}\right)$, so p is going to be $\frac{3}{5}$. The p-cluster is $C_p=\{ g,h,d,j \}$, with density $D=\frac{2}{3}$, see figure 1. 
 
 ## c) 
 
-!!!! DENI WILL PAINT SOME MORE STUFF!!!
+**Figure 2:  Nash-Equiblibrium 1** \
+!["Plot1"](/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/01.png)
+
+**Figure 3: Nash-Equiblibrium 2** \
+
+!["Plot2"](/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/02.png)
+
+$\pagebreak$  
+
+**Figure 4: Nash-Equiblibrium 3** \
+
+!["Plot3"](/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/03.png)
+
+**Figure 5:  Nash-Equiblibrium 4** \
+
+!["Plot4"](/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/04.png)
+
+**Figure 6: Nash-Equiblibrium 5** \
+
+!["Plot5"](/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/05.png)
+
+**Figure 7: Nash-Equiblibrium 6** \
+
+!["Plot6"](/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/06.png)
 
 ## d)
 
-No we can't have the same Nash-Equilibria, because when we have a tie we are more likely to choose one of them namely to choose the one which has bigger initial values ($\alpha$ or $\beta$). 
+We can't have the same Nash-Equilibria. The bigger the difference between $\alpha$ and $\beta$ is, the more unlikely it is to substain the initially appointed equilibria, which ever of both is bigger will point which option A or B, to choose more frequently. 
+
+$\pagebreak$ 
 
 ### Problem 2
 
-***(2.1.a)***
+## 2.1)
 
-Step 1:
-$h_{A_i}^{(1)}=2h_{C_i}^{(1)}=\frac{1}{8}$
-$a_{B_i}^{(1)}=\frac{3}{8}$ 
-$a_{D}^{(1)}=\frac{5}{8}$ 
-Step 2:
-$h_{A_i}^{(2)}=\frac{9}{8}$
-$a_{B_i}^{(2)}=\frac{27}{8}$ 
-$h_{C_i}^{(2)}=\frac{5}{8}$
-$a_{D}^{(2)}=\frac{25}{8}$ 
-Conclusion:
-$a_{B_i}^{(2)}>a_{D}^{(2)}$ 
-even from the second iteration there is a difference between the authority meassures of the two different nodes. 
-***(2.1.b)***
+**2.1.a)**
 
-We define the formulas for the two sub-graphs separatly. The first sub-graph consists of A's and B's. Let $b:=\text{number of B's}$ and $a:=\text{number of A's}$ and $c=\text{constant}=\frac{1}{8}$. For
-Step $k=1$: 
-$h^{(1)}=a^0b^0c = c$
-$a^{(1)}=ab^0c$
-Step $k=2$: 
-$h^{(2)}=a^{(1)}b =bab^0c = b^{(k-1)}a^{(k-1)}c$
-$a^{(2)}=abab^0c=a^{(k)}b^{(k-1)}c$
-Step $k=3$: 
-$h^{(3)}=a^{(2)}b = a^{(k-1)}b^{(k-2)}bc = a^{(k-1)}b^{(k-1)}bc$
-$a^{(3)}=aa^{(k-1)}b^{(k-1)}c=a^{(k)}b^{(k-1)}c$
-In general we define:
-$h_{A_i}^{(k)}:=a^{(k-1)}b^{(k-1)}bc$
-$a_{B_i}^{(k)}:=a^{(k)}b^{(k-1)}c$
+We will find the answer within an iterative process:
 
-for the secon sub-graph 
-Step $k=1$: 
-$h^{(1)}= c$
-$a^{(1)}=5c$
-Step $k=2$: 
-$h^{(2)}=5c=5^{(k-1)}c$
-$a^{(2)}=5*5c=5^{k}c$
-In general we define:
-$h_{C_i}^{(k)}=5^{(k-1)}c$
-$a_{D}^{(k)}=5^{k}c$
+**Step 1:** \ 
 
-***(2.1.c)***
+* $h_{A_i}^{(1)}=2h_{C_i}^{(1)}=\frac{1}{8}$ 
+* $a_{B_i}^{(1)}=\frac{3}{8}$ 
+* $a_{D}^{(1)}=\frac{5}{8}$ 
 
-Let the normalizing constant be 
+**Step 2:**   
+
+* $h_{A_i}^{(2)}=\frac{9}{8}$
+* $a_{B_i}^{(2)}=\frac{27}{8}$ 
+* $h_{C_i}^{(2)}=\frac{5}{8}$
+* $a_{D}^{(2)}=\frac{25}{8}$ 
+
+**Conclusion:** \ 
+
+From this procedure we find:
+
+$$a_{B_i}^{(2)}>a_{D}^{(2)}$$
+
+So, even from the second iteration there is a difference between the authority meassures of the two different nodes. 
+
+**2.1.b)**
+
+We define the formulas for the two sub-graphs separatly. The **first sub-graph** consists of A's and B's. Following that, let $b:=\text{number of B's}$ and $a:=\text{number of A's}$ and $c=\text{constant}=\frac{1}{8}$. For
+
+**For $k=1$:** 
+
+* $h^{(1)}=a^0b^0c = c$
+* $a^{(1)}=ab^0c$
+
+**For $k=2$:**
+
+* $h^{(2)}=a^{(1)}b =bab^0c = b^{(k-1)}a^{(k-1)}c$
+* $a^{(2)}=abab^0c=a^{(k)}b^{(k-1)}c$
+
+**For $k=3$:**
+
+* $h^{(3)}=a^{(2)}b = a^{(k-1)}b^{(k-2)}bc = a^{(k-1)}b^{(k-1)}bc$
+* $a^{(3)}=aa^{(k-1)}b^{(k-1)}c=a^{(k)}b^{(k-1)}c$
+
+From this procedure we define for the general case:
+
+* $h_{A_i}^{(k)}:=a^{(k-1)}b^{(k-1)}bc$
+* $a_{B_i}^{(k)}:=a^{(k)}b^{(k-1)}c$
+
+We repeat this iterative procedure for the for the **second sub-graph**: 
+
+**For $k=1$:**
+
+* $h^{(1)}= c$
+* $a^{(1)}=5c$
+
+**For $k=2$:** 
+
+* $h^{(2)}=5c=5^{(k-1)}c$
+* $a^{(2)}=5*5c=5^{k}c$
+
+Also for the second graph we define for the general case:
+
+* $h_{C_i}^{(k)}=5^{(k-1)}c$
+* $a_{D}^{(k)}=5^{k}c$
+
+**2.1.c)**
+
+Firstly, let the normalizing constant be defined as follows:
 $$
 \begin{aligned}
-const_h&=3[a^{k-1}b^{k-1}c] +5 5^{k-1}c \\
-&=3 3^{2k-2} c + 5^{k}c \\
+const_h&=3[a^{k-1}b^{k-1}c] +5*5^{k-1}c \\
+&=3*3^{2k-2} c + 5^{k}c \\
 &=(3^{2k-1}+5^k)c
 \end{aligned}
 $$
-The normalized version of the hub meassure is:
+Following that the normalized version of the hub meassures are:
 $$
 \begin{aligned}
-\widehat{h_{A_i}}&=\frac{h_{A_i}}{const_h} \\
-&\propto \frac{9^k}{(3^{2k-1}+5^k)}
-\widehat{h_{C_i}} = \frac{5^k}{3^{2k-1}k+5^k}
+\widehat{h_{A_i}}&=\frac{h_{A_i}}{const_h} \propto \frac{1}{3} \frac{9^k}{(3^{2k-1}+5^k)} \\
+\widehat{h_{C_i}} &= \frac{5^k}{3^{2k-1}k+5^k}
 \end{aligned}
 $$
 The other authority nomalizing constant is define as:
 $$
 \begin{aligned}
-const_{a} = 3 a^{K}b^{k-1} c + 5^{k} c \\
+const_{a} &= 3 a^{K}b^{k-1} c + 5^{k} c \\
 &= 3^{k} c + 5^{k} c \\
-\widehat{a_{B_i}} = \frac{3^{2k-1}}{3^{K}b^{k-1} + 5^{k}  } \\
-\propto \frac{9^{K}}{3^{K}+5^{K}} \\
-\widehat{a_{D}} = \frac{5^{k}}{3^{K} + 5^{k}}
+\widehat{a_{B_i}} &= \frac{3^{2k-1}}{3^{K}b^{k-1} + 5^{k}  } \propto  \frac{1}{3} \frac{9^{K}}{3^{K}+5^{K}} \\
+\widehat{a_{D}} &= \frac{5^{k}}{3^{K} + 5^{k}}
 \end{aligned}
 $$
-Conclusion: As k goes to infitiy $\widehat{a_{B_i}}$ will go slower to 0 than $\widehat{a_{D}}$. The same is equivalent for $\widehat{h_{A_i}}$ than $\widehat{h_{C_i}}$.
+**Conclusion:** As k goes to infitiy $\widehat{a_{B_i}}$ will go slower to $\frac{1}{3}$ and $\widehat{a_{D}}$ will converge to 0, assuming that $5^{K}$ is sufficinetly small compared to $3^{2K-1}$. The same is equivalent for $\widehat{h_{A_i}}$ than $\widehat{h_{C_i}}$. Therefore, the hub vector $h$ is equal to $h=(\frac{1}{3},\frac{1}{3},\frac{1}{3},0,0,0,0,0,0,0,0,0)$ and the authority vector is $a=(0,0,0,0,0,0,\frac{1}{3},\frac{1}{3},\frac{1}{3},0,0,0)$, corresponding equivalently for the hub-measure of A's and the authority meassure for the B's. 
 So when pages have multiple reinforcement, meaning hub points to more than one page, then in the world web the authorities will be bigger and could more easily be found. 
+If we increase the number of C nodes then there is the possibility that the hub-measure of the C's and the authority measure of D will converge to $\left(\frac{1}{3},\frac{1}{3},\frac{1}{3}\right)$. This change of convergence will occur whenever the C nodes are more than nine. 
 
-***(2.2)***
+##2.2)
 
-Than the effect will be the same for the two sub-graph, even it will be accelerated. 
+The result will be that the authority and the hub-measure will coincide. 
+$$
+\begin{aligned}
+\boldsymbol{h}^k &= (\boldsymbol{G} \boldsymbol{G}^T)^k \boldsymbol{h}^{1} = \boldsymbol{G}^{2k}\boldsymbol{h}^{1} \\
+\boldsymbol{a}^k &= (\boldsymbol{G}^T \boldsymbol{G})^{k-1} \boldsymbol{h}^{1} = \boldsymbol{G}^{2(k-1)} \boldsymbol{G} \boldsymbol{h}^{1} = \boldsymbol{G}^{2k-1}  \boldsymbol{h}^{1} \approx \boldsymbol{G}^{2k}\boldsymbol{h}^{1}, 
+\end{aligned}
+$$
+when $k$ goes to infinity.  
 
-***(2.3)***
+##2.3)
 
-SIGNEDSEALEDDELIVERED
+To get convegergence in the HIT algorithm we should normalize at the last step. 
+$$
+\begin{aligned}
+\boldsymbol{h}^k &= (\boldsymbol{G} \boldsymbol{G}^T)^k \boldsymbol{h}^{1} \\
+\frac{\boldsymbol{h}^{(k)}}{\omega^{(k)}} &=(\boldsymbol{G} \boldsymbol{G}^T)^k \frac{\boldsymbol{h}^{1}}{\omega^{(k)}}
+\end{aligned}
+$$
+where $\omega^{(k)}$ is the normalizing constant at period $k$. \
+As k goes to infinity we converge to $\boldsymbol{h}^*$, but its direction shouldn't change when it is multiplied by $\boldsymbol{G} \boldsymbol{G}^T$. \
 
-```{r}
+$\implies$ $\hspace{0.3cm}$ $\boldsymbol{G} \boldsymbol{G}^T\boldsymbol{h}^* = k\boldsymbol{h}^*$ \
+
+Therefore $\boldsymbol{h}^*$ is an eigenvector for $\boldsymbol{G} \boldsymbol{G}^T$ and $\omega$ is its corresponding eigenvalue. \
+By power iteration law it follows that $\omega$ konverges to the maximum eigenvalue if k goes to infinity. 
+For any undirected bipartite graph the adjacency matrix is the following:
+$$
+\begin{aligned}
+\boldsymbol{G} &= \left(\begin{array}
+{rr}
+0 & \boldsymbol{A}  \\
+\boldsymbol{A}^T & 0
+\end{array}\right),
+\end{aligned}
+$$
+where $\boldsymbol{A}$ is a symmetric matrix. Also $\boldsymbol{G}$ is symmetric. 
+$$
+\begin{aligned}
+\boldsymbol{G} \boldsymbol{G}^T &= \left(\begin{array}
+{rr}
+0 & \boldsymbol{A}  \\
+\boldsymbol{A}^T & 0
+\end{array}\right) \left(\begin{array}
+{rr}
+0 & \boldsymbol{A}^T  \\
+\boldsymbol{A} & 0
+\end{array}\right) \\
+&= \left(\begin{array}
+{rr}
+0 & \boldsymbol{A}^2  \\
+\boldsymbol{A}^2 & 0
+\end{array}\right) \\
+\end{aligned}
+$$
+This shows all paths of length two. If we assume that self loops exist then $\boldsymbol{G} \boldsymbol{G}^T$ is actually equal to the projection matrix of the bipartite graph. Thus, $\boldsymbol{G} \boldsymbol{G}^T \boldsymbol{h} = \omega \boldsymbol{h}^*$ is actually the eigenvector centrality measure of the projection matrix, which by definition is
+$$
+\begin{aligned}
+\boldsymbol{c} = \frac{1}{\lambda_{max}} \boldsymbol{G}^2 \boldsymbol{c}
+\end{aligned}
+$$
+
+, where $\boldsymbol{c}$ is the centrality vector.
+
+$\pagebreak$  
+
+###Problem 3
+
+```{r include=FALSE,echo = FALSE}
 setwd('/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/')
 library(igraph)
+fit_power_law = function(graph) {
+  # calculate degree
+  d = degree(graph, mode = "all")
+  dd = degree.distribution(graph, mode = "all", cumulative = FALSE)
+  degree = 1:max(d)
+  probability = dd[-1]
+  # delete blank values
+  nonzero.position = which(probability != 0)
+  probability = probability[nonzero.position]
+  degree = degree[nonzero.position]
+  reg = lm(log(probability) ~ log(degree))
+  cozf = coef(reg)
+  power.law.fit = function(x) exp(cozf[[1]] + cozf[[2]] * log(x))
+  alpha = -cozf[[2]]
+  R.square = summary(reg)$r.squared
+  # plot
+  plot(probability ~ degree, log = "xy", xlab = "Degree (log)", ylab = "Probability (log)", 
+       col = 1, main = "Degree Distribution")
+  curve(power.law.fit, col = "red", add = T, n = length(d))
+}
 
-#1.2
-g <- sample_bipartite(10, 5, p=.4)
-gp = bipartite.projection(g)$proj1
-H = hub_score(gp)$value
-E = eigen_centrality(gp)$value
-H ; E
-round(H,3) == round(E,3)
-round(H,3) == round(E^2,3)
+```
 
-
-
+```{r echo=FALSE, comment="", echo=FALSE}
 #2.1
 probas = c(.01, .1, .25, .6)
 for (p in probas) {
-	print(paste('For probability =', p, ':'))
+  
+  cat(
+    "----------------------------------------------------------------------------------------------","\n",
+    'For probability = ', p,':',sep = '',"\n",
+    "----------------------------------------------------------------------------------------------","\n"
+    )
+  
+  # Construct  the graph and compute average path length
+  n   = 5000
+  g   = erdos.renyi.game(n, p)
+  
+  # Average path length
+  avg = average.path.length(g)
+  cat('    - average distance =', avg,"\n")
+  
+  # Diameter
+  d = get.diameter(g)
+  cat('    - diameter =', length(d) - 1,"\n")
 
-	n = 5
-	g = erdos.renyi.game(n, p)
-	avg = average.path.length(g)
+  # 
+  D <- lower.tri(shortest.paths(g))
+  D[D==Inf] <- 0
+  cat('    - the asbolute difference between the average distance and its approximation is', abs(avg-  log(n)/log(p*(n-1)) ),"\n")
+  cat('    - the asbolute difference between the diamter and its approximation is', abs(avg-max(D)))
+  
+  d <- degree_distribution(g)
+  
+  # Degree Distriution
+  plot(d, type='l', xlab="Degree",ylab="Fraction of nodes",main="Degree Distribution")
 
-	print(paste('    - average distance =', avg))
-
-	d = get.diameter(g)
-	print(paste('    - diameter =', length(d) - 1))
-
-	D <- lower.tri(shortest.paths(g))
-	D[D==Inf] <- 0
-	print(paste('    - the asbolute difference between the average distance and its approximation is', abs(avg-sum(D)/(n*(n-1))),'.'))
-	print(paste('    - the asbolute difference between the diamter and its approximation is', abs(avg-max(D)),'.'))
-
-	d <- degree_distribution(g)
-	pdf(paste0('plot_p', p, '.pdf'))
-	plot(d, type='l')
-	dev.off()
-
-	cl = clusters(g)
-	print(paste('    - number of components =', cl$no))
-
-	print('    - we see in the following table:')
-	t = table(cl$csize)
-	print(t)
-	print('')
-	print(paste('    that the largest component captures', ifelse(max(as.numeric(rownames(as.matrix((t)))))/n > .8, 'more', 'less'), 'than 80 percent of the nodes.'))
-	print('')
-	print('')
+  # Plot powerlaw
+  fit_power_law(g)
+  
+  # Find components
+  cl = clusters(g)
+  cat('    - number of components =', cl$no,"\n")
+  t = table(cl$csize)
+  cat('    - we see in the following table:',t,"\n")
+  cat('    ...that the largest component captures', ifelse(max(as.numeric(rownames(as.matrix((t)))))/n > .8, 'more', 'less'), 'than 80 percent of the nodes.',"\n")
+cat("\n","\n")
 }
+```
 
 
-
-#2.2
+```{r  include=FALSE,echo = FALSE}
 d <- read.table('/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/ca-AstroPh.txt', header=T)
 a <- graph.adjlist(as.matrix(d))
+```
 
+$\pagebreak$  
+
+###Problem 4
+
+```{r echo=FALSE, comment="", echo=FALSE}
 #centrality measures
 a1 = centr_degree
 a2 = eigen_centrality
@@ -228,10 +382,10 @@ a3 = page_rank
 a4 = authority.score
 
 #... their values
-a1(a)$centralization
-a2(a)$value
-a3(a)$value
-a4(a)$value
+#a1(a)$centralization
+#a2(a)$value
+#a3(a)$value
+#a4(a)$value
 
 #... and the 10 most central instances according to each of them
 c1 = a1(a)$res
@@ -239,32 +393,25 @@ c2 = a2(a)$vector
 c3 = a3(a)$vector
 c4 = a4(a)$vector
 maxC <- function(v) {unlist(as.matrix(sort.int(v, decreasing=T, index.return=TRUE))[2])[1:10]}
-print('degree centrality')
-maxC(c1)
-print('eigen centrality')
-maxC(c2)
-print('page rank')
-maxC(c3)
-print('HITS')
-maxC(c4)
+cat('Degree Centrality:',"\n",maxC(c1))
+cat('Eigen Centrality: ',"\n",maxC(c2))
+cat('Page Rank: ',"\n",maxC(c3))
+cat('HITS: ',"\n",maxC(c4))
+
 #id 53213 appears 3 times as the most central one
-
-
-
 
 g <- graph_from_edgelist(as.matrix(d), directed = F)
 d <- degree_distribution(g)
-plot(d, type='l', ylim=range(0,.01))
+
+cat("Degree Distribution","\n")
+plot(d, type='l', ylim=range(0,.01),xlab="Degree",ylab="Fraction of nodes")
 n <- 133279
 cl <- clusters(g)
-print(paste('    - number of components =', cl$no))
-
-print('    - we see in the following table:')
+cat('    - number of components =', cl$no)
 t = table(cl$csize)
-print(t)
-print('')
-print(paste('    that the largest component captures', round(17903/n*100, 0), 'percent of the nodes.'))
-print('But this cluster is still much bigger than the second one.')
+cat('    - we see in the following table:',"\n",t,"\n")
+
+cat('    that the largest component captures', round(17903/n*100, 0), 'percent of the nodes.')
+cat('But this cluster is still much bigger than the second one.')
+cat('There are', sum(adjacent.triangles(g)), 'adjacent triangles.')
 ```
-
-
