@@ -2,12 +2,9 @@
 title: "Problem Set 2"
 author: "Denits Panova, Thomas Vicente ,Felix Gutmann"
 date: "15 May 2016"
-output: pdf_document
-header-includes: \usepackage{bm}
-                 \usepackage{bbm}
-                 \usepackage{algorithmic}
-                 \usepackage{algorithm}
-                 \usepackage{graphicx}
+output: html_document
+header-includes: \usepackage{bm} \usepackage{bbm} \usepackage{algorithmic} \usepackage{algorithm}
+  \usepackage{graphicx}
 ---
 
 ### Problem 1
@@ -31,6 +28,7 @@ $$
 U_i(A) > U_i(B)
 \end{aligned}
 $$
+In the utility equations, $\alpha$ and $\beta$ represent how much choice A is preffered than choice B, having no other node choosing either of the options. They represent the endogenous, independent of the network, utility of respectively choosing A and B.  
 Proceed by substituting the definition of the utility functions in the last inequality:
 $$
 \begin{aligned}
@@ -66,11 +64,11 @@ $$
 
 **a.2.)**
 
-The Nash-Equilibrium (NE) appears when the incentive $\beta$ is bigger than the incentive $\alpha$ or when $b$, which is how much we value the friend who have chosen $b$.
+The Nash-Equilibrium (NE) occurs when both inequalities are satisfied simultaneously. A NE equilibrium will also be if we always choose B, no matter how many friends have chose A. Such case happens if the endogenous effect $\beta$ is extremely bigger than $\alpha$ or when $b$ (how much we value the friend who have chosen B< is extremely high.
 
 **a.3.)**
 
-We can not explain with a p-cluster, because the best response is based on $d_i$ and therefore is not constant. If $\alpha$'s and $\beta$'s are zero then we can represent Nash-Equilibria as p-clusters.  
+We can not explain with a p-cluster, because the best response is based on $d_i$ and therefore is not constant. If $\alpha$ and $\beta$ are zero then we can represent Nash-Equilibria as p-clusters.  
 
 ## b)
 
@@ -78,7 +76,7 @@ Set $\alpha=\beta=0$. Each nodes starts with B. Let $t=q=\frac{1}{2}$ for switch
 
 **b.1.)**
 
-Let $S=\{e-f\}$, where $S$ is the starting set meaning that the two nodes initially adopt behaviour A. 
+Let $S=\{e-f\}$, where $S$ is the starting set (the two nodes initially adopt behaviour A). In figure 1, we can see which nodes will switch to A. 
 
 **Figure 1** \
 
@@ -87,7 +85,7 @@ Let $S=\{e-f\}$, where $S$ is the starting set meaning that the two nodes initia
 
 **b.2.)**
 
-Let $q=\frac{2}{5}$, belonging to $\left(\frac{1}{3},\frac{1}{2}\right)$, so p is going to be $\frac{3}{5}$. The p-cluster is $C_p=\{ g,h,d,j \}$, with density $D=\frac{2}{3}$, see figure 1. 
+Let $q=\frac{2}{5}$, so p is going to be$1-q=\frac{3}{5}$. The p-cluster is $C_p=\{ g,h,d,j \}$, with density $D=\frac{2}{3}$, which is bigger than p. See figure 1. 
 
 ## c) 
 
@@ -118,7 +116,7 @@ $\pagebreak$
 
 ## d)
 
-We can't have the same Nash-Equilibria. The bigger the difference between $\alpha$ and $\beta$ is, the more unlikely it is to substain the initially appointed equilibria, which ever of both is bigger will point which option A or B, to choose more frequently. 
+We can't have the same Nash-Equilibria. The bigger the difference between $\alpha$ and $\beta$ is, the more unlikely it is to substain the initially appointed equilibria. Whichever of both is bigger will point to choosing more frequently option A or B.  
 
 $\pagebreak$ 
 
@@ -132,7 +130,7 @@ We will find the answer within an iterative process:
 
 **Step 1:** \ 
 
-* $h_{A_i}^{(1)}=2h_{C_i}^{(1)}=\frac{1}{8}$ 
+* $h_{A_i}^{(1)}=2h_{C_i}^{(1)}=\frac{1}{n}=\frac{1}{8}$ 
 * $a_{B_i}^{(1)}=\frac{3}{8}$ 
 * $a_{D}^{(1)}=\frac{5}{8}$ 
 
@@ -149,7 +147,7 @@ From this procedure we find:
 
 $$a_{B_i}^{(2)}>a_{D}^{(2)}$$
 
-So, even from the second iteration there is a difference between the authority meassures of the two different nodes. 
+So, even from the second iteration there is a difference between the authority meassures of the two different types of authority nodes. 
 
 **2.1.b)**
 
@@ -214,21 +212,21 @@ $$
 \begin{aligned}
 const_{a} &= 3 a^{K}b^{k-1} c + 5^{k} c \\
 &= 3^{k} c + 5^{k} c \\
-\widehat{a_{B_i}} &= \frac{3^{2k-1}}{3^{K}b^{k-1} + 5^{k}  } \propto  \frac{1}{3} \frac{9^{K}}{3^{K}+5^{K}} \\
-\widehat{a_{D}} &= \frac{5^{k}}{3^{K} + 5^{k}}
+\widehat{a_{B_i}} &= \frac{3^{2k-1}}{3^{K}b^{k-1} + 5^{k}  } \propto  \frac{1}{3} \frac{9^{k}}{3^{k}+5^{k}} \\
+\widehat{a_{D}} &= \frac{5^{k}}{3^{k} + 5^{k}}
 \end{aligned}
 $$
-**Conclusion:** As k goes to infitiy $\widehat{a_{B_i}}$ will go slower to $\frac{1}{3}$ and $\widehat{a_{D}}$ will converge to 0, assuming that $5^{K}$ is sufficinetly small compared to $3^{2K-1}$. The same is equivalent for $\widehat{h_{A_i}}$ than $\widehat{h_{C_i}}$. Therefore, the hub vector $h$ is equal to $h=(\frac{1}{3},\frac{1}{3},\frac{1}{3},0,0,0,0,0,0,0,0,0)$ and the authority vector is $a=(0,0,0,0,0,0,\frac{1}{3},\frac{1}{3},\frac{1}{3},0,0,0)$, corresponding equivalently for the hub-measure of A's and the authority meassure for the B's. 
-So when pages have multiple reinforcement, meaning hub points to more than one page, then in the world web the authorities will be bigger and could more easily be found. 
-If we increase the number of C nodes then there is the possibility that the hub-measure of the C's and the authority measure of D will converge to $\left(\frac{1}{3},\frac{1}{3},\frac{1}{3}\right)$. This change of convergence will occur whenever the C nodes are more than nine. 
+**Conclusion:** As k goes to infitiy $\widehat{a_{B_i}}$ will go to $\frac{1}{3}$ and $\widehat{a_{D}}$ will converge to 0, assuming that $5^{k}$ is sufficinetly small compared to $3^{2k-1}$. The same is equivalent for $\widehat{h_{A_i}}$ than $\widehat{h_{C_i}}$. Therefore, the hub vector $h$ is equal to $h=(\frac{1}{3},\frac{1}{3},\frac{1}{3},0,0,0,0,0,0,0,0,0)$ and the authority vector is $a=(0,0,0,0,0,0,\frac{1}{3},\frac{1}{3},\frac{1}{3},0,0,0)$, corresponding equivalently for the hub-measure of A's and the authority meassure for the B's.   
+So when pages have multiple reinforcement, meaning hubs point to more than one page, then in the world web the authorities will be sufficiently big and could bee more easily found.   
+If we increase the number of C nodes then there is a turning point when the hub-measure of the C's and the authority measure of D will converge to $\left(\frac{1}{3},\frac{1}{3},\frac{1}{3}\right)$. This change of convergence will occur whenever the C nodes are more than nine. 
 
 ##2.2)
 
-The result will be that the authority and the hub-measure will coincide. 
+The result will be that the authority and the hub-measures will coincide. 
 $$
 \begin{aligned}
-\boldsymbol{h}^k &= (\boldsymbol{G} \boldsymbol{G}^T)^k \boldsymbol{h}^{1} = \boldsymbol{G}^{2k}\boldsymbol{h}^{1} \\
-\boldsymbol{a}^k &= (\boldsymbol{G}^T \boldsymbol{G})^{k-1} \boldsymbol{h}^{1} = \boldsymbol{G}^{2(k-1)} \boldsymbol{G} \boldsymbol{h}^{1} = \boldsymbol{G}^{2k-1}  \boldsymbol{h}^{1} \approx \boldsymbol{G}^{2k}\boldsymbol{h}^{1}, 
+\boldsymbol{h}^{(k)} &= (\boldsymbol{G} \boldsymbol{G}^T)^k \boldsymbol{h}^{(1)} = \boldsymbol{G}^{2k}\boldsymbol{h}^{(1)} \\
+\boldsymbol{a}^{(k)} &= (\boldsymbol{G}^T \boldsymbol{G})^{k-1} \boldsymbol{h}^{(1)} = \boldsymbol{G}^{2(k-1)} \boldsymbol{G} \boldsymbol{h}^{(1)} = \boldsymbol{G}^{2k-1}  \boldsymbol{h}^{(1)} \approx \boldsymbol{G}^{2k}\boldsymbol{h}^{(1)}, 
 \end{aligned}
 $$
 when $k$ goes to infinity.  
@@ -238,8 +236,8 @@ when $k$ goes to infinity.
 To get convegergence in the HIT algorithm we should normalize at the last step. 
 $$
 \begin{aligned}
-\boldsymbol{h}^k &= (\boldsymbol{G} \boldsymbol{G}^T)^k \boldsymbol{h}^{1} \\
-\frac{\boldsymbol{h}^{(k)}}{\omega^{(k)}} &=(\boldsymbol{G} \boldsymbol{G}^T)^k \frac{\boldsymbol{h}^{1}}{\omega^{(k)}}
+\boldsymbol{h}^{(k)} &= (\boldsymbol{G} \boldsymbol{G}^T)^k \boldsymbol{h}^{(1)} \\
+\frac{\boldsymbol{h}^{(k)}}{\omega^{(k)}} &=(\boldsymbol{G} \boldsymbol{G}^T)^k \frac{\boldsymbol{h}^{(1)}}{\omega^{(k)}}
 \end{aligned}
 $$
 where $\omega^{(k)}$ is the normalizing constant at period $k$. \
@@ -248,7 +246,7 @@ As k goes to infinity we converge to $\boldsymbol{h}^*$, but its direction shoul
 $\implies$ $\hspace{0.3cm}$ $\boldsymbol{G} \boldsymbol{G}^T\boldsymbol{h}^* = k\boldsymbol{h}^*$ \
 
 Therefore $\boldsymbol{h}^*$ is an eigenvector for $\boldsymbol{G} \boldsymbol{G}^T$ and $\omega$ is its corresponding eigenvalue. \
-By power iteration law it follows that $\omega$ konverges to the maximum eigenvalue if k goes to infinity. 
+By power iteration law it follows that $\omega$ konverges to the maximum eigenvalue if k goes to infinity.  
 For any undirected bipartite graph the adjacency matrix is the following:
 $$
 \begin{aligned}
@@ -292,7 +290,8 @@ $\pagebreak$
 ###Problem 3
 
 ```{r include=FALSE,echo = FALSE}
-setwd('/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/')
+#setwd('/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/')
+setwd("/home/didi/BGSE/semester3/networks/github/14D009-Social-and-Economic-Networks")
 library(igraph)
 fit_power_law = function(graph) {
   # calculate degree
@@ -344,13 +343,13 @@ for (p in probas) {
   D <- lower.tri(shortest.paths(g))
   D[D==Inf] <- 0
   cat('    - the asbolute difference between the average distance and its approximation is', abs(avg-  log(n)/log(p*(n-1)) ),"\n")
-  cat('    - the asbolute difference between the diamter and its approximation is', abs(avg-max(D)))
+  cat('    - the asbolute difference between the diamter and its approximation is', abs(avg-log(n)/log(p*(n-1))))
   
   d <- degree_distribution(g)
   
   # Degree Distriution
   plot(d, type='l', xlab="Degree",ylab="Fraction of nodes",main="Degree Distribution")
-
+  # hist(d, xlab="Degree",ylab="Fraction of nodes",main="Degree Distribution")
   # Plot powerlaw
   fit_power_law(g)
   
@@ -366,7 +365,7 @@ cat("\n","\n")
 
 
 ```{r  include=FALSE,echo = FALSE}
-d <- read.table('/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/ca-AstroPh.txt', header=T)
+d <- read.table('ca-AstroPh.txt', header=T)
 a <- graph.adjlist(as.matrix(d))
 ```
 
@@ -393,10 +392,10 @@ c2 = a2(a)$vector
 c3 = a3(a)$vector
 c4 = a4(a)$vector
 maxC <- function(v) {unlist(as.matrix(sort.int(v, decreasing=T, index.return=TRUE))[2])[1:10]}
-cat('Degree Centrality:',"\n",maxC(c1))
-cat('Eigen Centrality: ',"\n",maxC(c2))
-cat('Page Rank: ',"\n",maxC(c3))
-cat('HITS: ',"\n",maxC(c4))
+cat('Degree Centrality for the top 10 nodes:',"\n",maxC(c1))
+cat('Eigen Centrality for the top 10 nodes: ',"\n",maxC(c2))
+cat('Page Rank for the top 10 nodes: ',"\n",maxC(c3))
+cat('HITS for the top 10 nodes: ',"\n",maxC(c4))
 
 #id 53213 appears 3 times as the most central one
 
