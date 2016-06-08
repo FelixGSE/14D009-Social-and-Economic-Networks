@@ -1,0 +1,13 @@
+\select@language {english}
+\contentsline {section}{I \hspace {0.35em}Table of Contents}{I}{section*.1}
+\contentsline {section}{\numberline {II}List of Figures}{III}{section.II}
+\contentsline {section}{\numberline {III}List of Tables}{III}{section.III}
+\contentsline {section}{\numberline {IV}List of mathematical symbols}{IV}{section.IV}
+\contentsline {section}{\numberline {1}Introduction and review of relevant papers}{1}{section.1}
+\contentsline {section}{\numberline {2}Mathematical foundation of centrality measures}{2}{section.2}
+\contentsline {subsection}{\numberline {2.1}Notation and basic backround of markow chains}{2}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Random walk centrality}{4}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Random walk betweness centrality}{5}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Absorbing random walk centrality}{6}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Guided random walk centrality}{8}{subsection.2.5}
+\contentsline {section}{\numberline {3}List of Literature}{9}{section.3}

@@ -2,7 +2,7 @@
 title: "Problem Set 2"
 author: "Denits Panova, Thomas Vicente ,Felix Gutmann"
 date: "15 May 2016"
-output: html_document
+output: pdf_document
 header-includes: \usepackage{bm} \usepackage{bbm} \usepackage{algorithmic} \usepackage{algorithm}
   \usepackage{graphicx}
 ---
@@ -29,7 +29,7 @@ U_i(A) > U_i(B)
 \end{aligned}
 $$
 In the utility equations, $\alpha$ and $\beta$ represent how much choice A is preffered than choice B, having no other node choosing either of the options. They represent the endogenous, independent of the network, utility of respectively choosing A and B.  
-Proceed by substituting the definition of the utility functions in the last inequality:
+Proceed by sustaining the definition of the utility functions in the last inequality:
 $$
 \begin{aligned}
 \alpha + d_i^Aa > \beta + d_i^Bb
@@ -116,7 +116,7 @@ $\pagebreak$
 
 ## d)
 
-We can't have the same Nash-Equilibria. The bigger the difference between $\alpha$ and $\beta$ is, the more unlikely it is to substain the initially appointed equilibria. Whichever of both is bigger will point to choosing more frequently option A or B.  
+We can't have the same Nash-Equilibria. The bigger the difference between $\alpha$ and $\beta$ is, the more unlikely it is to sustain the initially appointed equilibria. Whichever of both is bigger will point to choosing more frequently option A or B.  
 
 $\pagebreak$ 
 
@@ -290,8 +290,8 @@ $\pagebreak$
 ###Problem 3
 
 ```{r include=FALSE,echo = FALSE}
-#setwd('/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/')
-setwd("/home/didi/BGSE/semester3/networks/github/14D009-Social-and-Economic-Networks")
+setwd('/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/')
+#setwd("/home/didi/BGSE/semester3/networks/github/14D009-Social-and-Economic-Networks")
 library(igraph)
 fit_power_law = function(graph) {
   # calculate degree
@@ -311,7 +311,7 @@ fit_power_law = function(graph) {
   # plot
   plot(probability ~ degree, log = "xy", xlab = "Degree (log)", ylab = "Probability (log)", 
        col = 1, main = "Degree Distribution")
-  curve(power.law.fit, col = "red", add = T, n = length(d))
+  #curve(power.law.fit, col = "red", add = T, n = length(d))
 }
 
 ```
@@ -345,24 +345,27 @@ for (p in probas) {
   cat('    - the asbolute difference between the average distance and its approximation is', abs(avg-  log(n)/log(p*(n-1)) ),"\n")
   cat('    - the asbolute difference between the diamter and its approximation is', abs(avg-log(n)/log(p*(n-1))))
   
-  d <- degree_distribution(g)
-  
+  #d <- degree_distribution(g)
+  d <- degree(g)
   # Degree Distriution
-  plot(d, type='l', xlab="Degree",ylab="Fraction of nodes",main="Degree Distribution")
+  plot(density(d), type='l', xlab="Degree",ylab="Density",main="Degree Distribution")
   # hist(d, xlab="Degree",ylab="Fraction of nodes",main="Degree Distribution")
   # Plot powerlaw
-  fit_power_law(g)
-  
+  #fit_power_law(g)
+  xp = log(1:length(d))
+  y = sort(log(d),decreasing=TRUE)
+  plot(xp,y, xlab="Log of rankings",ylab = "Log of degrees",main="Log-Log-Plot")
   # Find components
   cl = clusters(g)
   cat('    - number of components =', cl$no,"\n")
   t = table(cl$csize)
-  cat('    - we see in the following table:',t,"\n")
+  cat('    - The numbers of components are:',t,"\n")
   cat('    ...that the largest component captures', ifelse(max(as.numeric(rownames(as.matrix((t)))))/n > .8, 'more', 'less'), 'than 80 percent of the nodes.',"\n")
 cat("\n","\n")
 }
 ```
 
+From the Log-Log-Plot we can see that it looks like a powerlaw distribution. 
 
 ```{r  include=FALSE,echo = FALSE}
 d <- read.table('ca-AstroPh.txt', header=T)
@@ -408,9 +411,10 @@ n <- 133279
 cl <- clusters(g)
 cat('    - number of components =', cl$no)
 t = table(cl$csize)
-cat('    - we see in the following table:',"\n",t,"\n")
-
-cat('    that the largest component captures', round(17903/n*100, 0), 'percent of the nodes.')
+cat('    - we see in the following table:',"\n","\n")
+print(t)
+cat("\n")
+cat(', that the largest component captures', round(17903/n*100, 0), 'percent of the nodes.')
 cat('But this cluster is still much bigger than the second one.')
 cat('There are', sum(adjacent.triangles(g)), 'adjacent triangles.')
 ```

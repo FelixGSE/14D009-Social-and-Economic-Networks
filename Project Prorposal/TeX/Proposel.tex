@@ -1,0 +1,292 @@
+\documentclass[12pt,a4paper,bibliography=totocnumbered,listof=totocnumbered]{scrartcl}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage[right]{eurosym}
+\usepackage[printonlyused]{acronym}
+\usepackage{subfig}
+\usepackage{floatflt}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{colortbl}
+\usepackage{paralist}
+\usepackage{array}
+\usepackage{titlesec}
+%\usepackage{dsfont}
+\usepackage{parskip}
+\usepackage[right]{eurosym}
+\usepackage[subfigure,titles]{tocloft}
+\usepackage[pdfpagelabels=true]{hyperref}
+\usepackage{hyperref}
+\usepackage{mathdots}
+\usepackage{listings}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{fix-cm}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage[labelfont=bf]{caption}
+\captionsetup{labelfont=bf}
+\usepackage{tikz}
+
+
+\begin{document}
+
+% ----------------------------------------------------------------------------------------------------------
+% Front Page
+% ----------------------------------------------------------------------------------------------------------
+
+\thispagestyle{empty}
+\begin{center}
+	\includegraphics[width=\textwidth]{Pictures/logo01.jpg}\\
+	\vspace*{2cm}
+	\vspace*{2cm}
+	\Huge
+	\textbf{14D009 - Social and Economic Networks}\\
+	\vspace*{0.5cm}
+	\large
+	\textbf{Project Report}\\
+	\vspace*{1cm}
+	\textbf{Random walk based centrality measures}\\
+\end{center}	
+
+$\vspace{5cm}$
+\begin{tabbing}
+	\hspace*{1cm}\=\hspace*{3.2cm}\=\hspace*{3cm}\=\hspace*{2.7cm}\= \kill
+	\onehalfspacing
+	\textbf{Author:} \>\> Felix Gutmann\\
+	\textbf{Student number:} 	\>\> 125604\\
+	\textbf{Program:} \>\> M.S. Data Science\\
+	\textbf{E-Mail:} \>\> felix.gutmann@barcelonagse.eu
+\end{tabbing}
+
+
+% ----------------------------------------------------------------------------------------------------------
+% Table of contents
+% ----------------------------------------------------------------------------------------------------------
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\theHsection}{\Roman{section}}
+\pagenumbering{Roman}
+\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{2pt plus 2pt minus 2pt}
+\singlespacing
+\rhead{Table of contents}
+\renewcommand{\contentsname}{I Table of Contents}
+\phantomsection
+\addcontentsline{toc}{section}{\texorpdfstring{I \hspace{0.35em}Table of Contents}{Table of Contents}}
+\addtocounter{section}{1}
+\setcounter{page}{1}
+
+\pagenumbering{Roman}
+
+\tableofcontents
+
+
+\pagebreak
+% ----------------------------------------------------------------------------------------------------------
+% List of figures
+% ----------------------------------------------------------------------------------------------------------
+
+\listoffigures
+
+% ----------------------------------------------------------------------------------------------------------
+% List of tables
+% ----------------------------------------------------------------------------------------------------------
+
+\listoftables
+
+
+
+\pagebreak
+% ----------------------------------------------------------------------------------------------------------
+% Abstract
+% ----------------------------------------------------------------------------------------------------------
+\renewcommand{\arraystretch}{1.5}	
+\section{List of mathematical symbols}
+\rhead{List of mathematical Symbols}
+
+\begin{tabular}{p{6cm}p{9cm}}
+	\textbf{Symbol} 		& 		\textbf{Meaning} \\
+	\midrule
+	\vspace{0.3cm} & \vspace{0.3cm} 									\\
+	$\delta$ & Kronecker delta
+\end{tabular}
+
+\pagebreak
+
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theHsection}{\arabic{section}}
+\setcounter{section}{0}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\onehalfspacing
+
+------------------------------------------------------------------------------------------
+% Section 1 - Introduction
+% ----------------------------------------------------------------------------------------------------------
+
+\section{Introduction and review of relevant papers}
+
+Various measures have been proposed to find important nodes in a network. However, the term importance depends on the question one might to answer. The most natural way to think about importance is how many connection a node has, called the \textit{degree centrality} of a node. Besides that two very prominent measures were proposed to take the global structure of the network into account.\\ \textit{Closeness Centrality} indicates how close a node is on average to all other nodes in the network. Therefore, it measures how quickly a node interacts with the rest of the network. \cite[page 184]{wasserman1994social}.\\
+On the other hand \textit{betweness centrality} counts how often a node lies on the shortes path \cite[page 190]{wasserman1994social}. Hence, it can be interpreted as the power a node has on the flow of information in a network \cite[page 2]{Newman2005}.\\
+Both of the latter concepts assume that information is passed along the shortest path between two nodes and hence are suitable to answer question where information a transmition happens in such a way. However, that assumption might not always be valid.  necessarily be the case for obvious reasons. People might discuss different topics with different kind of friends and thus information spread has a different nature. Hence one might also take no geodesics into account. Another point is that connection might change or disappear. Errasing a node from a network (e.g a friendship ends) can change the outcome for the mentioned centrality measure. Therefore, random walk based measures provide a more robust centrality indicator \cite[page 1]{Mavroforakis2016}  \\
+One way to adress this issue is to use random walks on graph. This first project provides a summary of relevant work in that field and give a formal derivation of proposed concepts. Therefore, the report has the following structure. First there will be an informal review of the papers outlining the intention of the concepts and possible fields of applications. The following section then provides a formal derivation of each concept. In the following we will review the following four paper.\\
+To my knowledge \cite{Noh2004} and  \cite{Newman2005} can be viewed as the two defining papers in that field. \cite{Mavroforakis2016} is a recent paper doing also something. While the later three defining random walks in the notion of \textit{markow chains}, \cite{Takes2011} approaches random walks in a different way. 
+
+\section{Mathematical foundation of centrality measures}
+
+This section provides formal derivations for each centrality measure. Since, most papers use different notations we might define some basic notation to ensure consistency. In general we try to merge the notation of the papers following \cite{Mavroforakis2016}. 
+
+\subsection{Notation and basic backround of markow chains}
+
+First we might formally introduce a graph. Note, that we only consider unweighted and undirected simple graphps. A graph is an ordered pair $G=(V,E)$, where $V$ is the set of vertices $V=\{v_1,\dots\}$ and $E$ is the set of edges $E=\{e_1,\dots,e_n\}$. The adjacency matrix \textbf{A} of the graph G \cite[page 124]{aigner2007dis}, where an entry is defined as:
+\begin{align}
+a_{ij}=\begin{cases}1&\text{if v$_i$v$_j$ $\in$ E}\\0&\text{otherwise}\end{cases}
+\end{align}
+The \textit{neigbherhoud} of a node $N(v_i)$ is the set of vertices adjacent to $v_i$. Hence, the \textit{degree} of a node is defined as: 
+\begin{align}
+d(v_i)=|N(v_i)| 
+\label{eq:de}
+\end{align}
+Using equation \eqref{eq:de} we define \textbf{d} as the n $\times$ 1 vector of all degrees and \textbf{D} as the diagonal matrix of the degrees. 
+
+In general a random walk is characeterized as follows. A random walk starts at a given node of the graph and moves to an adjacent node with a certain probability. They are usually modeled with the notion of markow chains. We introduce alson some notations for the markow chains following \cite[page 383 et. seqq.]{Wasserman2004}. Consider the set of different states $\mathcal{X}=\{1,\dots,N\}$. A markow chain is modeled with an  N $\times$ N \textit{transition matrix} $\textbf{P}$, where an entry describes the probabilty to go move from one state to another. A random walks is a stochastic process and therefore developes over a a number of (in our case) discrete steps denoted by $T=\{1,2,\dots\}$. Combining that, an entry of the transition matrix satisfies the following:
+\begin{align}
+\textbf{P} = p_{ij}:=\mathbb{P}\left(X_{t+1} = j | X_t = i \right)
+\label{eq:p}
+\end{align}
+The next step is therefore only defined by the last state. The transition probabilities in the for step $t$ is obtained by simple matrix multiplication:
+\begin{align}
+ \textbf{P}(t):=\underbrace{\textbf{P} \times \dots  \times \textbf{P}}_{\text{t - times}}
+\label{eq:tp}
+\end{align}
+A state is called \textit{persistent} if $p_{ii} = 1$ and $p_{iij} = 0$ for $j \neq$ and \textit{transient} otherwise. Hence persisent can be seen as absorbing nodes. This fact will be applied later in section \ref*{sec:arc}.
+
+\pagebreak
+\subsection{Random walk centrality}
+
+The paper especially introduces the concept of the \textit{Mean first passage time}.\footnote{The concept gets for example adapted and adjustet to compute central sectors in Input Output Tables (for more information see \cite{bl2010} and \cite{bl2011})} We start by defining the transition probabilities for the random walk by normalizing the the entries of the adjacency matrix by the degree.
+\begin{align}
+\textbf{P} = \textbf{A} \textbf{D}^{-1}
+\label{eq:tra01}
+\end{align}
+
+Note that we deviate a little bit from the source paper and continou to express the necessary derivation in matrix algebra. We might normalize each degree by the sum over all degress. Let $D = \sum_{k}\textbf{d}_i$. 
+
+\begin{align}
+\textbf{P}_i^{\infty} = \frac{d_i}{D}
+\end{align}
+
+
+\begin{align}
+p_{ij}(t) = \delta_{t0} \delta_{ij} + \sum_{t'=0}^{t} p_{jj}(t-t')F_{ij}(t')
+\end{align}
+
+\pagebreak
+\subsection{Random walk betweness centrality}
+
+The tranisition matrix is identical to equation \eqref{eq:tra01}. We also want to see the transition behaviour. Hence we could set the values in the transition matrix, such that the target note becomes persistent (this is applied in next section). However, another method is just to remove the $t$ row and column. Hence we denote this matrix as:
+\begin{align}
+\textbf{P}_t = \textbf{A}_t \textbf{D}_t^{-1}
+\label{eq:tra02}
+\end{align}
+
+\pagebreak
+\subsection{Absorbing random walk centrality}
+\label{sec:arc}
+
+For this measure we may have to introduce some additional notation. The objective is to to indentify a set of $k$ central node. Denote this set of central nodes as C. Moreover, define the \textit{query nodes} $Q$ such that $Q \subseteq V$. We define a third set of so called \textit{candidate nodes}, which are potentially in C, such that $C \subseteq D$. This distinction serves the purpose that depending on the application the set of central nodes can be limited to the nodes in Q, but in others can be potentially belong to V.\\
+The random walk in this concept starts at a node from the set in the query nodes $q \in Q$. The random walks proceeds as soon it arrives at a node $c \in C$, where it gets absorbed. The starting node is chosen with a discrete distribution $s(v_i)$.\footnote{In the simplest case this can be taken as a uniform distribution} \\
+Likewise the other centrality the centrality is defined as the expected value how fast that happens. Recall the tranistion matrix defined in equation \eqref{eq:p}. Since a node in C absorbs the random walk it is persistent and the probiltiy of escaping is zero (see the properties of markow chains in section 2). The remaining transient nodes are therefore T = V $\setminus$ C.\\ 
+An extension to the algorithm is that a random walk can be restarted with a given probability $\alpha$. Taking the last mentioned facts we write out the adjusted transition probabilities for 
+
+\begin{align}
+p_{ij} = \begin{cases} \alpha s(v_j) &\text{if $j \in Q \setminus N(i)$}\\
+\frac{(1-\alpha)}{d_i} + \alpha s(v_j)&\text{if $j \in N(i)$}\end{cases}
+\label{eq:tra01}
+\end{align}
+
+Finally the complete transition matrix can be expressed as a blockwise arrangement of the following four sub matrices:
+
+\begin{align}
+\textbf{P} =  \left( \begin{array}{cc}
+\textbf{P}_{\text{TT}} & \textbf{P}_{\text{TC}}  \\
+\textbf{0} & \textbf{I}   \end{array} \right)
+\end{align}
+
+Recalling ones more equation \eqref{eq:tp} we the probability that the random work after $t$ has't been absorbed is $\textbf{P}_{\text{TT}}(t)$. The expected total number can be computed by the infinite series:
+
+\begin{align}
+\textbf{F} = \sum_{t=0}^{\infty}\textbf{P}_{\text{TT}}(t) = \left( \textbf{I} - \textbf{P}_{\text{TT}} \right)^{-1}
+\label{eq:ff}
+\end{align}
+
+Using the previous equation \eqref{eq:ff} that the expected length of the random walk getting absorbed can be computed using the following vector:
+
+\begin{align}
+\textbf{L} = \textbf{L}_C = \left( \begin{array}{c} \textbf{F} \\  \textbf{0} \end{array} \right) \textbf{1}
+\label{eq:ff}
+\end{align}
+
+The final measure is achieved by summing over all nodes in Q. 
+
+\begin{align}
+C_{RWA} = \textbf{s}^{\text{T}}\textbf{L}_C
+\label{eq:ff}
+\end{align}
+
+ However, this measure comes with a cost. Not only follows from equation \eqref{eq:ff} that each computation has to be done inverting a matrix, which can be computationally expensive, but also we have to optimize this procedure over different choices of C.
+
+\pagebreak
+\subsection{Guided random walk centrality}
+
+As stated in section 1. this paper has a slightly different approach. First we might define what they call the neighbherhood density:
+
+\begin{align}
+f_{nd}(v) = 1 - \frac{1}{|N(v)|}
+\label{eq:fnd}
+\end{align}
+
+\begin{align}
+f_{nd}(v) = 1 - \sum_{w \in N(v)} \frac{|N(w) \cap N(v) | }{(|N(w)| - 1) |N(v)|} =  1 - \sum_{w \in N(v)} \frac{|N(w) \cap N(v) | }{(\text{d}_w - 1) \text{d}_v} 
+\label{eq:fnd}
+\end{align}
+
+\begin{align}
+\mathbb{P}(w) = \frac{\alpha f_{deq}(w) + (1-\alpha)f_{nd}(w)}{\sum_{u \in N(v)} (\alpha f_{deq}(u) + (1-\alpha) f_{nd}(u) ) }
+\label{eq:pw}
+\end{align}
+
+\pagebreak
+% ----------------------------------------------------------------------------------------------------------
+% Literature
+% ----------------------------------------------------------------------------------------------------------
+
+\renewcommand\refname{List of Literature}
+
+\bibliographystyle{apalike}
+
+\bibliography{Networks}
+
+
+% ----------------------------------------------------------------------------------------------------------
+% Appendix
+% ----------------------------------------------------------------------------------------------------------
+
+\pagebreak
+
+\pagenumbering{Alph}
+\setcounter{page}{1}
+
+\begin{appendix}
+\section*{Appendix}	
+	
+\end{appendix}	
+
+
+\end{document}
