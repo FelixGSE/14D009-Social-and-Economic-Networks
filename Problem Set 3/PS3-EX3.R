@@ -18,6 +18,70 @@ cdf_val <- function(vec){
 setwd('/Users/felix/Documents/GSE/Term 3/14D009 Social and Economic Networks/Problemsets/14D009-Social-and-Economic-Networks/Problem Set 3')
 
 # ----------------------------------------------------------------
+# Exercise 0
+# ----------------------------------------------------------------
+
+n8 <- function(x) {
+  y <- -x^2 +3*x^3 +x^4 -x^5 -x^6 -x^7
+}
+
+x_seq <- seq(0,1,by=0.0001)
+
+y8 <- n8(x_seq)
+
+tikz("p20.tex", width = 6, height =4)
+plot(x_seq, y8, 
+     type='l', 
+     xlab = "delta",
+     ylab = "Bound", 
+     lwd=2,
+     cex.lab=0.8,
+     cex.axis = 0.5,
+     tck=-0.03,
+     las=1,
+     mgp = c(2, 0.5, 0),
+     main="")
+abline(h=0, col='red')
+dev.off()
+
+#enlarge to see better which value it is
+
+tikz("p21.tex", width = 6, height =4)
+plot(x_seq, y8, type='l',
+     xlab = "delta", 
+     ylab = "Bound", 
+     ylim=c(-0.01,0.05), 
+     xlim = c(0,0.35),
+     lwd=2,
+     cex.lab=0.8,
+     cex.axis = 0.5,
+     tck=-0.03,
+     las=1,
+     mgp = c(2, 0.5, 0),
+     main="")
+abline(a=0, b=0, h=0, col='red')
+dev.off()
+
+#equation for n=10
+n10 <- function(x) {
+  y <- -x^2 +x^3   +3*x^4   +x^5   -x^6 -x^7 -x^8 -x^9
+}
+
+y10 <- n10(x_seq)
+
+png("p22.png")
+plot(x_seq, y10, type='l',
+     lwd=2,
+     cex.lab=0.8,
+     cex.axis = 0.5,
+     tck=-0.03,
+     las=1,
+     mgp = c(2, 0.5, 0),
+     main="")
+abline(a=0, b=0, h=0, col='red')
+dev.off()
+
+# ----------------------------------------------------------------
 # Exercise 1
 # ----------------------------------------------------------------
 
@@ -35,7 +99,7 @@ b04 <- barabasi.game(10**4,m=4,start.graph = start,directed = FALSE); d04 = degr
 tikz("p01.tex", width = 3.5, height =3.5)
 
   plot(density(d04),type='l',ylim=c(0,0.4),xlab="Degree",ylab="Density",xlim=c(0,250),
-       col='blue', lwd=2,cex.lab=0.8,cex.axis = 0.5,tck=-0.03,las=1,mgp = c(2, 0.5, 0),main="")
+       col='green', lwd=2,cex.lab=0.8,cex.axis = 0.5,tck=-0.03,las=1,mgp = c(2, 0.5, 0),main="")
   
   par(new=TRUE)
   
@@ -44,11 +108,11 @@ tikz("p01.tex", width = 3.5, height =3.5)
   
   par(new=TRUE)
   
-  plot(density(d02),type='l',ylim=c(0,0.4),xlab="",ylab="",xlim=c(0,250),col='green', 
+  plot(density(d02),type='l',ylim=c(0,0.4),xlab="",ylab="",xlim=c(0,250),col='blue', 
        lwd=2,axes=FALSE,main="")
   
   legend('topright',legend=c(expression(paste(10^2)),expression(paste(10^3)),expression(paste(10^4))),
-         lty=1,col=c('green','red','blue'), bty = "n",cex=0.8)
+         lty=1,col=c('blue','red','green'), bty = "n",cex=0.8)
   
 dev.off()
 
@@ -68,12 +132,12 @@ t22 <- log(as.numeric(t20))
 # Power law plot
 tikz("p02.tex", width = 3.5, height =3.5)
 
-  plot(t01,t02,xlim=c(1,6),ylim=c(0,8.5),col='red',pch=19,cex=0.5,xlab="log(degree)",ylab="log(frequency)",
+  plot(t01,t02,xlim=c(1,6),ylim=c(0,8.5),col='blue',pch=19,cex=0.5,xlab="log(degree)",ylab="log(frequency)",
        cex.lab=0.8,cex.axis = 0.5,tck=-0.03,las=1,mgp = c(1.2, 0.5, 0))
   
   par(new=TRUE)
   
-  plot(t11,t12,xlim=c(1,6),ylim=c(0,8.5),col='blue',pch=19,cex=0.5,xlab="",ylab="",axes=FALSE)
+  plot(t11,t12,xlim=c(1,6),ylim=c(0,8.5),col='red',pch=19,cex=0.5,xlab="",ylab="",axes=FALSE)
   
   par(new=TRUE)
   
@@ -190,7 +254,7 @@ tikz("p07.tex",width = 6, height =6)
   plot(iter,d54,type="l",xlim=c(0,15000),ylim = c(0,140),xlab="Time",ylab="Degree",cex.lab=0.8,
        cex.axis = 0.5,tck=-0.01,bty="l",las=1,mgp = c(2, 0.5, 0),col='black')
   legend('topleft',legend=c("Degree node 1","Degree node 100","Degree node 1000","Degree node 5000" ),
-         lty=1,col=c('blue','red','green'), bty = "n",cex=0.6)
+         lty=1,col=c('blue','red','green','black'), bty = "n",cex=0.6)
 dev.off()
 
 # ---------------------------------------------------------------

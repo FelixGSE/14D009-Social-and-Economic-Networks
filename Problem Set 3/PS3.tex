@@ -42,13 +42,35 @@
 \begin{document}
 \maketitle
 
+\section*{Additional Plots for problem 1}
+
+\begin{figure}[!htb]
+\input{p20.tex}
+\caption{For Which Values of Delta the Bound is Positive}
+\label{p20}
+\end{figure}
+
+\begin{figure}[!htb]
+	\input{p21.tex}
+	\caption{Higher Resolution to Identify the Delta}
+	\label{p21}
+\end{figure}
+
+\begin{figure}[!htb]
+	\includegraphics[width=5in,height=3in]{p22.png}
+	\caption{10-Node Case}
+	\label{p22}
+\end{figure}
+
+
+\pagebreak
 \section*{Exercise 5.1 Barabasi}
 
 \subsection*{(a) \& (b)}
 
 Figure \ref{p01} (a) shows the degree distribution for intermediate steps and figure \ref{p01} (b) the log log plot. We can observe convergence. 
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
 \begin{tabular}{cc}
 \input{p01.tex} & \input{p02.tex} 
 \end{tabular}
@@ -59,12 +81,12 @@ Figure \ref{p01} (a) shows the degree distribution for intermediate steps and fi
 \pagebreak
 \subsection*{(c)}
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
 	\begin{tabular}{cc}
 		\input{p05.tex} & \input{p04.tex} \\
-		(a) $10^2$ & (b) $10^4$ \\
+		(a) CDF for $10^2$ nodes & (b) CDF for $10^3$ nodes \\
 		 	\input{p03.tex} & \\
-		 (c) $10^6$	 
+		 (c) CDF for $10^4$	nodes
 	\end{tabular}
 	\caption{Cumulative distribution function}
 \end{figure}
@@ -72,7 +94,7 @@ Figure \ref{p01} (a) shows the degree distribution for intermediate steps and fi
 \pagebreak
 \subsection*{(d)}
 
-\begin{table}[!h]
+\begin{table}[!htb]
 	\centering
 	\begin{tabular}{l|l}
 		\toprule \toprule
@@ -87,7 +109,7 @@ Figure \ref{p01} (a) shows the degree distribution for intermediate steps and fi
 	\caption{Average clustering coefficient for intermediate steps}
 \end{table}
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
 	\centering
 	\input{p06.tex}
 	\caption{Average clustering coefficient as a function of N }
@@ -96,7 +118,7 @@ Figure \ref{p01} (a) shows the degree distribution for intermediate steps and fi
 \pagebreak
 \subsection*{(e)}
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
 	\centering
 	\input{p07.tex}
 	\caption{Degree dynamics}
@@ -105,21 +127,29 @@ Figure \ref{p01} (a) shows the degree distribution for intermediate steps and fi
 \pagebreak
 \section{Exercise 2}
 
-The following figure \ref{p10}| shows the dendogram for the edge-betweenness. Modularity maximization is not a hierarchical procedure.
+\subsection*{(1) - (5)}
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
 	\begin{tabular}{cc}
 		\input{p08.tex} & \input{p09.tex} \\
-		(a) Edge-betweenness &  (b) Modularity maximization
+		(a) Girvan-Newman &  (b) Modularity maximization
 	\end{tabular}
 	\caption{Communities with different algorithms}
+	\label{comp}
 \end{figure}
 
-\begin{figure}[!h]
+Figure \ref{comp} shows the results for both community detection algorithms.\\
+The Girvan-Newman algorithm is based on edge betweenness. In every iteration the edge betweenness is calculated and nodes with high values are removed. In doing this sequentially components are isolated and  the community structure is found.\\
+Modularity optimization has a more "statistical approach". It identifies communities based on the true number of edges and the expected number one would see in a random process. Hence, the graph is split by optimizing for large modularity.
 
+\subsection*{(1) - (6)}
+
+The following figure shows the dendogram for the  Girvan-Newman method. Modularity maximization does not follow hierarchical procedure, which implies that there is no dendogram.
+
+\begin{figure}[!htb]
 		\input{p10.tex}
-\label{p10}
-	\caption{Dendogram }
+	\caption{Dendogram Girvan-Newman method for community detection}
+	\label{p10}
 \end{figure}
 
 \end{document}
