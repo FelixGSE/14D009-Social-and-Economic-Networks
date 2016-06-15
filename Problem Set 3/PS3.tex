@@ -1,0 +1,125 @@
+\documentclass[12pt,a4paper,bibliography=totocnumbered,listof=totocnumbered]{scrartcl}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage[right]{eurosym}
+\usepackage[printonlyused]{acronym}
+\usepackage{subfig}
+\usepackage{floatflt}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{colortbl}
+\usepackage{paralist}
+\usepackage{array}
+\usepackage{titlesec}
+%\usepackage{dsfont}
+\usepackage{parskip}
+\usepackage[right]{eurosym}
+\usepackage[subfigure,titles]{tocloft}
+\usepackage[pdfpagelabels=true]{hyperref}
+\usepackage{hyperref}
+\usepackage{mathdots}
+\usepackage{listings}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{fix-cm}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage[labelfont=bf]{caption}
+\captionsetup{labelfont=bf}
+\usepackage{tikz}
+\usepackage[]{algorithm2e}
+\title{Problem Set 3 - R - Exercises}
+\author{Denitsa Panova - Felix Gutmann - Thomas Vicente}
+\geometry{a4paper, top=27mm, left=25mm, right=15mm, bottom=35mm, headsep=10mm, footskip=12mm}
+
+\begin{document}
+\maketitle
+
+\section*{Exercise 5.1 Barabasi}
+
+\subsection*{(a) \& (b)}
+
+Figure \ref{p01} (a) shows the degree distribution for intermediate steps and figure \ref{p01} (b) the log log plot. We can observe convergence. 
+
+\begin{figure}[!h]
+\begin{tabular}{cc}
+\input{p01.tex} & \input{p02.tex} 
+\end{tabular}
+\caption{Degree Distribution}
+\label{p01}
+\end{figure}
+
+\pagebreak
+\subsection*{(c)}
+
+\begin{figure}[!h]
+	\begin{tabular}{cc}
+		\input{p05.tex} & \input{p04.tex} \\
+		(a) $10^2$ & (b) $10^4$ \\
+		 	\input{p03.tex} & \\
+		 (c) $10^6$	 
+	\end{tabular}
+	\caption{Cumulative distribution function}
+\end{figure}
+
+\pagebreak
+\subsection*{(d)}
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{l|l}
+		\toprule \toprule
+		& Average Clustering Coefficient \\
+		\hline
+		\textbf{$10^2$} & 0.133 \\
+		\textbf{$10^4$} & 0.03 \\ 
+		\textbf{$10^6$} & 0.004 \\
+		\hline 
+		\bottomrule
+	\end{tabular}
+	\caption{Average clustering coefficient for intermediate steps}
+\end{table}
+
+\begin{figure}[!h]
+	\centering
+	\input{p06.tex}
+	\caption{Average clustering coefficient as a function of N }
+\end{figure}
+
+\pagebreak
+\subsection*{(e)}
+
+\begin{figure}[!h]
+	\centering
+	\input{p07.tex}
+	\caption{Degree dynamics}
+\end{figure}
+
+\pagebreak
+\section{Exercise 2}
+
+The following figure \ref{p10}| shows the dendogram for the edge-betweenness. Modularity maximization is not a hierarchical procedure.
+
+\begin{figure}[!h]
+	\begin{tabular}{cc}
+		\input{p08.tex} & \input{p09.tex} \\
+		(a) Edge-betweenness &  (b) Modularity maximization
+	\end{tabular}
+	\caption{Communities with different algorithms}
+\end{figure}
+
+\begin{figure}[!h]
+
+		\input{p10.tex}
+\label{p10}
+	\caption{Dendogram }
+\end{figure}
+
+\end{document}
