@@ -15,4 +15,4 @@ Project I:
 
 Project II:
 
-Predicting multiple node affiliations using social dimension and overlapping community membership as input for supervised learning algorithms
+- Predicting multiple node affiliations using social dimension and overlapping community membership as input for supervised learning algorithms
