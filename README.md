@@ -1,16 +1,17 @@
 Repository for social networks class
 
-Content:
+## Content:
 
 - Random Graphs
 - Centrality Measures (Shortest path centrality measures, Eigenvector Centrality, PageRank, etc.)
 - Community detection
 - Strategic network formation and game theory in networks
 
+## Projects
+
 Project I:
 
-Theoretical survey on random walk based centrality measures to identify “important”
-nodes on complex graphs 
+- Theoretical survey on random walk based centrality measures to identify “important” nodes on complex graphs 
 
 Project II:
 
