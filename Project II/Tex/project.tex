@@ -1,0 +1,133 @@
+
+\documentclass[11pt,letterpaper]{article}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{times}      
+\usepackage[T1]{fontenc}    
+
+\usepackage[colorinlistoftodos]{todonotes} 
+\usepackage{graphicx} 
+\usepackage{tikz} 
+\usepackage{epigraph} 
+\usepackage{multicol} 
+\usepackage{color} 
+%\usepackage{soul} 
+%\usepackage[backref]{hyperref}  
+%\hypersetup{pdfborder={0 0 0}}  
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage[capposition=top]{floatrow}
+\usepackage{geometry}
+\geometry{a4paper, top=27mm, left=27mm, right=27mm, bottom=35mm, headsep=10mm, footskip=12mm}
+
+\linespread{1.5}
+
+%\setlength\parindent{0pt}  
+\setlength{\parskip}{0mm}   
+\author{
+	Felix Gutmann\\
+	\href{mailto:felix.gutmann@barcelonagse.eu}{felix.gutmann@barcelonagse.eu}
+	\and
+	Nicholas Halliwell\\
+	\href{mailto:nicholas.halliwell@barcelonagse.eu}{nicholas.halliwell@barcelonagse.eu}}
+
+\title{Extracting Latent Social Dimensions}
+
+\date{\today} 
+
+
+\begin{document}
+\maketitle
+
+\section*{Introduction} 
+
+The focus of this project is around data this is not independent and identically distributed. Most, if not all social media datasets are like this, as there exists dependent relationships between individuals in the network. These networks are said to be multidimensional, given the many ways people can connect. The authors in \cite{latent} propose a method to extract unobserved variables the network, using relational learning to address the dependency issue. These ``social dimension'' describe how users in the network connect with each other. Essentially the authors are labeling nodes in a network graph, however, nodes can obtain multiple labels. This makes predictions difficult, the method of extracting ``social dimensions'' proposed in \cite{latent} was shown to outperform relational learning methods. In this project, we implement this method of ``social dimension'' extraction, and using the same dataset, attempt to improve their results.
+
+This report has three main sections. The first section gives a more detailed summary of the key findings of the used paper. In the third section we try to replicate the authors results and subsequently try to improve with a different classifier. Furthermore, we try to extract more informations from the network to boost prediction results.
+Finally we summarize results and discuss out findings.
+
+\section*{Summary}
+Here we summarize the results of \cite{latent} where they propose and implement an algorithm to extract these ``social dimensions'' and compare classification results on several datasets. First and foremost, the authors are interested in labeling nodes of a social media network where nodes can take multiple labels. The authors give the following example; Actor one connects with Actor two on social media as they work for the same company. Actor two connects with Actor three as they attend the same gym. The data given to us is the interests of Actor one, however, given that Actor two and Actor three connect to Actor one, can we learn the interests of the other actors?\par
+
+The proposed algorithm starts with a modularity matrix of the graph. After computing this from the graph, the algorithm then takes the $k$ largest eigenvectors. The authors recommend $k$ to be between $400-600$, we chose $500$ for convenience. These eigenvectors are the social dimensions, used as features for supervised multi-label learning. Naturally, computing the modularity matrix for large graphs and the associated eigenvectors is quite costly. The authors provide a Matlab implementation, where the eigenvectors are computed without computing the modularity matrix explicitly. \\
+The authors use a Support Vector Machine using a one-vs-all method and compare classification performance using the Micro-$F1$ and Macro-$F1$ metric. They compare their method to six others, finding their method beats all others in most cases. \par
+
+The dataset we use comes from Flickr, a website where users upload photos, connect with friends, and tag photos. These tags serve as node labels. This dataset consists of $195$ different labels, $80,513$ actors, who are represented as nodes in the graph, and $5,899,882$ links between these actors. '\\
+We had a more closer look on the network. The graph density is only 0.18 and therefore the network is quite sparse. Figure \ref{fig:fig1} shows the degree distribution of the Flickr graph
+
+\begin{figure}[H]
+	\input{pictures/powerlaw.tex} \\
+	\caption{Desgree distribution for full graph}
+	\label{fig:fig1}
+\end{figure}
+
+The situation we are dealing with is a multi-label classification problem. The labels are arranged in a binary matrix where an entry for each node is indicating whether a node has a given label. On average each node has 1.4 labels. The label matrix is also very sparse. Only $0. 0.69 \%$ of the corresponding label matrix are different from zero. 
+
+\section*{Implementation and Results}
+We attempt to replicate the results from \cite{latent} using the Flickr dataset. We subset this dataset for computational convenience, taking $5-15\%$ of the original dataset, and constructing the test set size from $50 - 500.$\\
+We used the authors code for the SVM. After over $8$ hours of running, we had no results. We implemented the Support Vector Machine in python to be more flexible. After sub setting the data, we run the SVM like in \cite{latent}, however, we were not able to match their results. We constantly get a score of zero. The linear version of the classifier (applied in the paper) depends on on parameter C.\footnote{In short the SVM is an optimization problem try to find a hyperplane to separate the data with different labels. If data are not separable the the best hyperplane is tried to be found with minimizing errors. The C parameter controls the penalty for misclassification.} The authors do not share their parameter setting they used to tune the algorithm. This could be one possibility for our finding. The tuning of SVM's is very costly. We tried several different parameter settings, without success. \\
+We also implemented a random forest using a one-vs-all method, a classifier known for performing well on large datasets. It serves well for us to produce results in limited time, because it is significantly faster. Even with this classifier, we were not able to match the authors results. We attribute this due to the missing information regarding the size of the test set.\footnote{The code for both implementations is available on https://github.com/halliwelln/Networks-Project}\\
+As show we can't replicate the results of the authors. We explored the the problems with a lot of different runs.
+The authors are not very explicit about their setup, they only state the 'training ratio' as input for their model. If we assume they mean they train their classifier on 10 \% of the data set and predict on the remaining 90\% their results for such a complex multilabel seem fairly high.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{rrrrr}
+		\hline
+		& Macro & Micro & Training Size & Test Size \\ 
+		\hline
+		1 & 0.01 & 0.09 & 8052 & 50 \\ 
+		2 & 0.01 & 0.06 & 8052 & 100 \\ 
+		3 & 0.04 & 0.12 & 8052 & 150 \\ 
+		4 & 0.02 & 0.08 & 8052 & 200 \\ 
+		5 & 0.03 & 0.08 & 8052 & 250 \\ 
+		6 & 0.02 & 0.07 & 8052 & 300 \\ 
+		7 & 0.02 & 0.07 & 8052 & 350 \\ 
+		8 & 0.03 & 0.11 & 8052 & 400 \\ 
+		9 & 0.03 & 0.09 & 8052 & 450 \\ 
+		\hline
+	\end{tabular}
+	\caption{Classification results for different test set sizes ( training ratio =  )}
+\end{table}
+
+\section*{Improvements based on network properties}
+
+In classification we find to find patterns in the data, which discriminate different classes. Therefore, we want to use features which provide class specific patterns in the feature space to make it easier for the classifier to discriminate between those classes. Hence, we want to provide the classifier with information, which helps it to identify such patterns in the data.\\
+The authors state that any additional kind of predictors can be used in the classification setup (e.g.such as demographics etc.). A natural extension would be to extract more information we extract from the network. However, the extracted information have to help identify what determines nodes affiliation to different tags. The easiest way one could think to add community detection algorithms and also use this as features. We would like to employ algorithms for overlapping community detection, because we hope that provides information that nodes with similar tag structure are also of different communities simultaneously. A well known property of social networks is the presence of homophily. Roughly spoken it says that individuals tend to be in similar groups (see. e.g. \cite{Mcpherson2016}). Assuming also that similar tend to be associated with the same kind of groups. We want to try if that adds additional pattern structure to the data set.\\ 
+The downturn is the heavy complexity of our data set. We use \textit{linkcomm} package of R to find overlapping communities. The main reason is that it works very efficient for a reasonable graph size. Furthermore, the algorithm runs faster if the adjacency matrix is sparse (which in our case is true). A small simulation test indicates that the runtime is increasing heavily with adding new nodes (based on simple random graphs with probability 0.1). Figure \ref{fig:fig1} shows the execution time in minutes as a function of nodes. 
+
+\begin{figure}[H]
+	\input{pictures/exectime.tex}
+	\caption{Execution time vs. number of nodes in random graphs}
+	\label{fig:fig2}
+\end{figure}
+
+We can benefit heavily from the sparsity of the Flickr network  Nevertheless we had to reduce the size of the network. In a simple manner we subset uniformly 6819.\footnote{The runtime was roughly 45 minutes} It turns out that we could keep more or less the basic graph properties like the powerlaw distribution (see figure \ref{fig:fig3}), average number of tags per (1.39) node and graph density (0.27). \footnote{We actually sampled 8000, but dropped isolated nodes.}
+
+\begin{figure}[H]
+	\input{pictures/powerlaw_2.tex}
+	\caption{Desgree distribution for random sub graph}
+	\label{fig:fig3}
+\end{figure}
+
+We found 611 comunuties. Despite the fact we can't match the results for the author's we try to beat our results. We could assume that this would maybe also push up prediction results in the setting of the authors. The following tables show our results. First we extracted the social dimension for our new sub-graph. The we run our classifier on that matrix. Finally we rerun the model with additional dummy variables indicating 
+
+\section*{Conclusion and review}
+
+
+
+
+\begin{thebibliography}{99} 
+	
+\bibitem{latent}Tang, Lei, and Huan Liu. "Relational Learning via Latent Social Dimensions." Proceedings of the 15th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining - KDD '09 (2009)
+
+\bibitem{Mcpherson2016} Mcpherson, Miller, Lynn Smith-Lovin, and James M. Cook. "Birds of a Feather: Homophily in Social Networks." Annu. Rev. Sociol. Annual Review of Sociology 27.1 (2001): 415-44. Web.
+
+
+\end{thebibliography}
+
+
+\end{document}

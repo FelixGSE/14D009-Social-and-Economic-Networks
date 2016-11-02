@@ -1,0 +1,364 @@
+\documentclass[12pt,a4paper,bibliography=totocnumbered,listof=totocnumbered]{scrartcl}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage[right]{eurosym}
+\usepackage[printonlyused]{acronym}
+\usepackage{subfig}
+\usepackage{floatflt}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{colortbl}
+\usepackage{paralist}
+\usepackage{array}
+\usepackage{titlesec}
+%\usepackage{dsfont}
+\usepackage{parskip}
+\usepackage[right]{eurosym}
+\usepackage[subfigure,titles]{tocloft}
+\usepackage[pdfpagelabels=true]{hyperref}
+\usepackage{hyperref}
+\usepackage{mathdots}
+\usepackage{listings}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{fix-cm}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage[labelfont=bf]{caption}
+\captionsetup{labelfont=bf}
+\usepackage{tikz}
+\usepackage[]{algorithm2e}
+
+\begin{document}
+
+% ----------------------------------------------------------------------------------------------------------
+% Front Page
+% ----------------------------------------------------------------------------------------------------------
+
+\thispagestyle{empty}
+\begin{center}
+	\includegraphics[width=\textwidth]{Pictures/logo01.jpg}\\
+	\vspace*{2cm}
+	\vspace*{2cm}
+	\huge
+	\textbf{14D009 - Social and Economic Networks}\\
+	\vspace*{0.5cm}
+	\large
+	\textbf{Topic}\\
+	\vspace*{1cm}
+	\textbf{Summary of random walk based centrality measures for complex networks}\\
+\end{center}	
+
+$\vspace{5cm}$
+\begin{tabbing}
+	\hspace*{1cm}\=\hspace*{3.2cm}\=\hspace*{3cm}\=\hspace*{2.7cm}\= \kill
+	\onehalfspacing
+	\textbf{Author:} \>\> Felix Gutmann\\
+	\textbf{Student number:} 	\>\> 125604\\
+	\textbf{Program:} \>\> M.S. Data Science\\
+	\textbf{E-Mail:} \>\> felix.gutmann@barcelonagse.eu
+\end{tabbing}
+
+
+% ----------------------------------------------------------------------------------------------------------
+% Table of contents
+% ----------------------------------------------------------------------------------------------------------
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\theHsection}{\Roman{section}}
+\pagenumbering{Roman}
+\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{2pt plus 2pt minus 2pt}
+\singlespacing
+\rhead{Table of contents}
+\renewcommand{\contentsname}{I Table of Contents}
+\phantomsection
+\addcontentsline{toc}{section}{\texorpdfstring{I \hspace{0.35em}Table of Contents}{Table of Contents}}
+\addtocounter{section}{1}
+\setcounter{page}{1}
+
+\pagenumbering{Roman}
+
+\tableofcontents
+
+\pagebreak
+
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theHsection}{\arabic{section}}
+\setcounter{section}{0}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\onehalfspacing
+
+%------------------------------------------------------------------------------------------
+% Section 1 - Introduction
+% ----------------------------------------------------------------------------------------------------------
+
+\section{Introduction and review of relevant papers}
+
+A wide range of centrality measures have been proposed to find important nodes in a network. However, the term importance depends on the question one might to answer. The most natural way to think about importance is to count how many connections a node has. Besides that, two very prominent measures were proposed taking the global structure of the network into account.\\ \textit{Closeness centrality} indicates how close a node is on average to all other nodes in the network. Therefore, it measures how quickly a node interacts with the rest of the network. \cite[page 184]{wasserman1994social}.\\
+On the other hand \textit{(shortest path) betweenness centrality} counts how often a node lies on the shortest path among nodes in the network \cite[page 190]{wasserman1994social}. Hence, it can be interpreted as the power a node has on the flow of information in a network \cite[page 2]{Newman2005}.\\
+Both of the latter concepts assume that information is passed along the shortest path between two nodes and hence they are suitable to answer question where information transmission happens in such a way. However, that assumption might not always be valid. E.g. People  discuss different topics with different friends and thus information spread could have a different nature. Following that, one might take also non geodesic paths into account. Another point to consider is that connection might change or disappear. Erasing a node from a network (e.g a friendship ends) can change the outcome for the mentioned centrality measures. Random walk based centralities provide a more robust centrality indicator \cite[page 1]{Mavroforakis2016} by taking all walks into account. This report provides a summary of some relevant concepts in that field.\\
+The report has the following structure. First there will be an informal review of the papers and a related summary of key findings. Section two provides a formal summary of each concept. \footnote{Note that is aiming more on identifying the important steps for computations.} Four papers have been reviewed.\\
+To my knowledge \cite{Noh2004} and  \cite{Newman2005} can be viewed as the two "founding" papers in that field. The two concepts are inspired by the two concepts mentioned in the beginning. \cite{Mavroforakis2016} is developing a random walk concept based on absorbing nodes. While the later three defining random walks in the notion of \textit{markow chains}, \cite{Takes2011} approaches random walks in a different way.
+
+ \cite{Noh2004} derive a centrality measure with special attention to \textit{scale-free} networks.\footnote{The degree distribution follows a power law distribution} Apart from that another motivation for their approach is, that employing "classical" centrality measures (such as closeness centrality) requires the global graph connectivity structure to be known in order to compute them. However given large networks such as the web graph or large social networks like facebook that obviously might be infeasible. As already mentioned in the introduction information might also not be transmitted over shortest paths. Therefore, information is considered moving randomly over all paths. The measure can be interpreted as how efficient nodes are in terms of receiving information from the network. Thus, it can be seen as variation of closeness centrality.\\
+ They study the theoretical behavior of the centrality measure by simulation (Barabasi-Albert networks).\footnote{The results require some more theoretical knowledge and therefore are not shown at this place. They can be found in \cite[page 4]{Noh2004} } They find that the random walk centrality is mostly determined by the degree distribution of the network. The centrality derived in the paper is restricted to undirected networks.\\ 
+ To my knowledge they don't provide a implementation. Furthermore, a discussion of computational complexity is missing.\footnote{Since the computation \textbf{in matrix notation} only requires inverting a matrix (see equation \eqref{eq:rwc}) the complexity can be assumed to be somewhat like $\mathcal{O}(n^3)$. }
+
+\cite{Newman2005} provides a measure for betweenness centrality. It is inspired both by shortest path and flow betweenness centrality.\footnote{The latter considers the flow through $k$ in the maximal flow from node $i$ to $j$ as an indicator of centrality}. Despite the fact that flow betweenness centrality also takes nodes into account, which do not lie on the shortest path, both concepts kind of assume an optimal movement of information through the network.\\
+Likewise random walk centrality their concept considers information diffusing randomly over the network and therefore it also considers walks apart from shortest paths. Essentially it indicates how often a vertex will lie on average on a random walk between all pairs of source and target nodes. However, shortest path are still contribute more to centrality. \\
+Besides a formal derivation the paper studies some properties. The paper identifies (especially) high correlation with shortest path betweenness centrality. In that context an interesting example is provided to justify the application. They study a network of the spread of sexual diseases. It is revealed that the random walk measures identifies additionally nodes, which are not recovered by shortest path betweenness centrality.\footnote{Other examples are an application to "Florentine Families" network and "co-authorship" network, which are not that interesting}\\
+
+ \cite{Mavroforakis2016} has a more theoretical objective. The paper aims to provide a random walk based centrality concept, which can be  e.g. applied for searching algorithms. The challenge is to find a set of nodes, which matches a users search and find the most central ones among those nodes. They derive an objective function to find such a set k-central nodes (the objective function is presented later on). In further context the paper lines out important properties, proofs and algorithms. In particular it provides a greedy algorithm to solve the optimization problem. Despite the fact the problem turns out to be NP-hard, two key properties of the objective function (monotonicity and super modularity) ensure an approximation guarantee. Since the algorithm requires costly matrix inversions they show how to employ Sherman Morrison inversion technique to speed up computation. Finally they study several heuristic techniques, which can additionally speed up computation. By studying performance on several available networks they find that most of the heuristic track the results from the greedy solution (for example\textit{Personalized Pagerank}, \textit{Degree and distance centrality}.\footnote{The authors provide a \href{https://absorbing-centrality.readthedocs.io/en/latest/}{ python implementation} }
+
+While the last three papers approach the issue with techniques related to markov chains, \cite{Takes2011} interpret random walks in the following way. In general their algorithm runs for a fixed time and samples in each iteration the next node to be chosen. This probability of the next node is determined by a weighted combination of \textit{degree centrality} and \textit{neighborhood density} (see equations \eqref{eq:dg}, \eqref{eq:nd} and \eqref{eq:pbs} ). Furthermore, an additional random element extend this concept to explore the graph. Their method is studied with a subset of the dutch social network "HYVES" with 8 million people. They define a set of 4, 867 (0.06\%) people to be prominent (politician, artists etc.). Considering that as the ground truth they let the algorithm compete against various other measures (Degree Centrality, Random Walk, PageRank, HITS). Their algorithm outperforms all of the latter beating the best (Degree Centrality) significantly with different variations of that data set and based on recall, precision or F-measure as evaluation measures.
+
+\section{Mathematical background of centrality measures}
+
+This section provides the formal derivations for each centrality measure. As a prerequisite notations for graphs are introduced. Furthermore, some background knowledge on markov chains is provided to give some intuition behind the used terminology later on.\footnote{Note that notation sometimes deviates from the original papers to set up consistency.}
+
+\subsection{Notation and basic background of markov chains}
+
+First we might formally introduce a graph. A graph is an ordered pair $G=(V,E)$, where $V$ is the set of nodes with $V=\{v_1,\dots\}$ and $E$ is the set of edges with $E=\{e_1,\dots,e_n\}$. The adjacency matrix of such a graph G is denoted as \textbf{A}, where entries $a_{ij}$ are defined as \cite[page 124]{aigner2007dis}:
+\begin{align}
+a_{ij}=\begin{cases}1&\text{if v$_i$v$_j$ $\in$ E}\\0&\text{otherwise}\end{cases} \nonumber
+\end{align}
+The \textit{neighborhood} of a node $N(v_i)$ is the set of vertices adjacent to $v_i$, so precisely the set $N(v) = \{u \in V : (u, v) \in E\}$. Following that, the \textit{degree} of a node is defined as: 
+\begin{align}
+d(v_i)=|N(v_i)|
+\label{eq:de}
+\end{align}
+Using equation \eqref{eq:de} we define \textbf{d} as the n $\times$ 1 vector of all degrees, $\bar{d} = \sum_{i=1}^{N}$ as the sum of degrees and \textbf{D} as the diagonal matrix of the degrees. 
+Finally, denote N as the number of nodes defined by $N = |V|$.
+
+A random walk is characterized as follows. It starts at a given node of the graph and moves to an adjacent node with a certain probability. Such random walks are usually modeled with the notion of markov chains. All following definitions can be found in chapter 23.2 in \cite[page 383 et. seqq.]{Wasserman2004}. Consider the set of N possible different states $\mathcal{X}=\{1,\dots,N\}$.\\
+A markov chain is modeled with an N $\times$ N \textit{transition matrix} $\textbf{P}$, where an entry denotes the probability to move from a given state to another. It said to be \textit{homogeneous}, if transition probabilities are not changing over time.\footnote{In the following this will be the case} A random walks is a stochastic process and therefore evolves over a number of (in our case) discrete index steps denoted by $T=\{1,2,\dots\}$. Combining that, an entry of the transition matrix satisfies:
+\begin{align}
+p_{ij}=\mathbb{P}\left(X_{t+1} = j | X_t = i \right) \nonumber
+\end{align}
+The next state is modeled considering only the last state. A state is said to be \textit{absorbing} if an entry of the transition matrix is equal to one.\\
+We want to model the behavior over time. The transition probabilities in the  $t$-th step is obtained by simple matrix multiplication of transition matrix:
+\begin{align}
+ \textbf{P}(t):=\underbrace{\textbf{P} \times \dots  \times \textbf{P}}_{\text{t - times}}
+\label{eq:tp}
+\end{align}
+A state is called \textit{recurrent} if in some step for $t\ge 1$ there is a probability that the random walks returns to its initial state. A recurrent state therefore satisfies:
+\begin{align}
+\mathbb{P}\left(X_{t} = i | X_0 = i \right) = 1 \nonumber
+\end{align}
+If state is \textbf{not} recurrent it is called \textit{transient}. In that context we might ask the question how much time it takes until a random walk returns to its initial state. Hence, we introduce \textit{recurrence time} and the \textit{mean recurrence time}. The recurrence time is define as
+\begin{align}
+T_{ij} = \min\{t>0:X_t = j\} \nonumber
+\end{align}
+For a given step in time $t$ and a recurrent state we can compute the expected value of the recurrence time as:
+\begin{align}
+\mathbb{E}(\text{T}_{ii}) = m_i =  \sum_{\text{t}} \text{t} f_{ii}(\text{t}) 
+\label{eq:mrt}
+\end{align}
+where
+\begin{align}
+f_{ij}( \text{t} ) &= \mathbb{P} \left( X_1 \neq j, X_2 \neq j,\dots,X_t = j | X_0 = i \right)  \nonumber
+\end{align}
+Finally we want to give guidance how to simulate a markov chain. Therefore, we introduce the marginal probability of a state.
+\begin{align}
+\mu_0 = \mathbb{P}\left(X_0 = i \right) \nonumber
+\end{align}
+The simulation follows a simple procedure. Let $\boldsymbol{\mu}_0$ the vector of marginal probabilities at $t=0$, such that $\boldsymbol{\mu}_0 = (\mu_{0,1}, \dots,\mu_{0,n}  ) $. To simulate the probabilities for the given states after $t$ steps we just need to multiply the marginal probabilities with the transition matrix after $t$ steps and so:
+\begin{align}
+\boldsymbol{\mu}_t =\boldsymbol{\mu}_0 \textbf{P}(t) \nonumber
+\end{align}
+
+\pagebreak
+\subsection{Random walk centrality}
+
+The paper especially introduces an explicit expression of the \textit{Mean first passage time} to model their centrality centrality (the idea seem to be related to \eqref{eq:mrt}).\footnote{This concept and the following one got for example adapted and adjusted to compute central sectors in Input Output Tables by  \cite{bl2010} and \cite{bl2011})} The graph is assumed to be connected, and if not so the procedure is conducted for each component. We start by defining the transition probabilities for the random walk by normalizing the the entries of the adjacency matrix by the degree.
+\begin{align}
+\textbf{P} = \textbf{D}^{-1} \textbf{A}
+\label{eq:tra01}
+\end{align}
+
+Next we define the normalized degree of a node as follow :
+\begin{align}
+\textbf{P}_i^{\infty} = \frac{d_i}{\sum_{i=1}^{N}} =  \frac{d_i}{\bar{d}} \nonumber
+\end{align}
+It can be shown that this is the stationary distribution of the process. The authors claim that random walks on finite networks are recurrent and the Mean First Passage Time is:
+
+\begin{align}
+T_{ij} = \sum_{t=0}^{\infty} \text{t} F_{ij}(t) \nonumber
+\end{align}
+
+Following that one can show that the mean first passage time in this case can be explicitly expressed in the following way ( see in particular \cite[page 2]{Noh2004}):
+
+\begin{align}
+T_{ij} = \begin{cases}  \frac{\bar{d}}{d_i}   & \text{for j = i}\\
+\frac{\bar{d}}{d_i} \left[ R_{jj}^{(0)} - R_{ij}^{(0)}   \right]&\text{for j $\neq$ i}\end{cases} \nonumber
+\end{align}
+
+$T_{ii}$ is the average return time, which only depends on the degree of a node and $R_{ij}^{(0)}  = \sum_{t=0}^{\infty}\left(p_{ii}(t) - \textbf{P}_i^{\infty} \right) $. The mean first passage time is not symmetric. One can show the following identity: 
+
+\begin{align}
+T_{ij} - T_{ji} &= \bar{d} \left( \frac{R_{jj}^{(0)}}{d_j} - \frac{R_{ii}^{(0)}}{d_i} \right) -  \bar{d} \left( \frac{R_{ij}^{(0)}}{d_j} - \frac{R_{ji}^{(0)}}{d_i} \right) \nonumber \\
+T_{ij} - T_{ji}  &= C_j^{-1} - C_i^{-1} \nonumber
+\end{align}
+
+Where C is the centrality of a node. We see from the last equation the difference in mean first passage time is low for high centrality values (freely spoken) and therefore the speed of information transmission is determined by the last equation. The final measure $C_i$ is then defined as:
+
+\begin{align}
+C_i = \frac{\textbf{P}_i^{\infty} }{R_{ii}^{(0)}} 
+\label{eq:rwc}
+\end{align}
+
+As stated in the summary, the centrality expresses how fast a node receives information from the network Higher values in \eqref{eq:rwc} are therefore indicating higher centrality.
+
+\pagebreak
+\subsection{Random walk betweness centrality}
+
+In the paper the centrality concept is derived with an analogy of an electrical flow network. The authors show that this is equivalent to the random walk interpretation. In the following this part is skipped and only a short guidance for computation is provided (furthermore, the intuition of that approach is not really obvious). Again the graph is assumed to be connected and in case it is not, the procedure should be repeated for each component. Start by removing  arbitrarily a row and corresponding column denoted as $t$ from the transition matrix. Hence we denote this matrix without those entries as:
+\begin{align}
+\textbf{P}_t = \textbf{A}_t \textbf{D}_t^{-1}
+\label{eq:tra02}
+\end{align}
+
+We are interested in how often a node is passed on random walks averaged over all source target pairs of nodes. In matrix terms we can express this in the following way: 
+
+\begin{align}
+\textbf{V} = \textbf{D}_t^{-1}\left(\textbf{I} - \textbf{P}_t\right)^{-1} \textbf{s} = \left(\textbf{D}_t - \textbf{A}_t \right)^{-1} \textbf{s} \nonumber
+\label{eq:tra3}
+\end{align}
+
+The matrix \textbf{V} is the voltage matrix and s is defined in the following way.\footnote{The name comes from the electrical network analogy} 
+
+\begin{align}
+\textbf{s} = \begin{cases} + 1  &\text{if } i = s\\
+-1 & \text{if } i = t \\
+0 & \text{otherwise} \end{cases} \nonumber
+\end{align}
+
+In the next step add a row and a column of zeros back into the matrix $\left(\textbf{D}_t - \textbf{A}_t \right)^{-1}$ at position t and we denote this as \textbf{T}. As a last step we introduce I to solve for betweenness.
+
+\begin{align}
+I^{(st)}_i = \frac{1}{2} \sum_{j}A_{ij} |V_i^{(st)} - V_j^{(st)}| = \frac{1}{2} \sum_{j}A_{ij} |T_{is} - T_{it} -T_{js} +T_{jt}| \nonumber
+\end{align}
+and we set $I^{(st)}_s = I^{(st)}_t = 1$. Finally, we compute the betweenness of a node as:
+
+\begin{align}
+b_i = \frac{\sum_{s<t}I_i^{(st)}}{1/2n(n-1)} 
+\end{align}
+
+\pagebreak
+\subsection{Absorbing random walk centrality}
+\label{sec:arc}
+
+For this measure we may have to introduce some additional notation. The objective is to to identify a set of $k$ central node. Denote this set of central nodes as C, where c $\in$ C and C $\subseteq$ V.\\ 
+Moreover, define the \textit{query nodes} $Q$ such that $Q \subseteq V$. \\
+We define a third set of so called \textit{candidate nodes}, which are potentially in C, such that $C \subseteq D$. This distinction serves the purpose that depending on the application the set of central nodes can be limited to the nodes in Q, but in others can be potentially belong to whole V.\\
+The random walk in this concept starts at a node in the query nodes $q \in Q$. The random walks proceeds as long as it arrives at any node in $C$, where it gets absorbed. The starting node is chosen with a discrete distribution $s(v_i)$.\footnote{In the simplest case this can be taken as a uniform distribution}. Likewise the other centralities the centrality here is defined as the expected value how fast that happens. Since a node in C absorbs the random walk the probability of escaping is zero and therefore entries $p_{cj} = 0$ and $p_{cc} = 1$. Non absorbing nodes are considered to be transient nodes and denoted as T = V $\setminus$ C.\\ 
+An extension to the algorithm is that a random walk can be restarted with a given fixed probability $\alpha$. Taking the last mentioned facts we write out the adjusted transition probabilities for 
+
+\begin{align}
+p_{ij} = \begin{cases} \alpha s(v_j) &\text{if $v_j \in Q \setminus N(v_i)$}\\
+\frac{(1-\alpha)}{d_i} + \alpha s(v_j)&\text{if $v_j \in N(v_i)$}\end{cases}
+\label{eq:tra01}
+\end{align}
+
+Finally the complete transition matrix can be expressed as a block wise arrangement of the following four sub matrices:
+
+\begin{align}
+\textbf{P} =  \left( \begin{array}{cc}
+\textbf{P}_{\text{TT}} & \textbf{P}_{\text{TC}}  \\
+\textbf{0} & \textbf{I}   \end{array} \right)
+\end{align}
+
+The probability that the random work after $t$ has't been absorbed is $\textbf{P}_{\text{TT}}(t)$. After infinite steps this is computed with the geometric series:
+
+\begin{align}
+\textbf{F} = \sum_{t=0}^{\infty}\textbf{P}_{\text{TT}}(t) = \left( \textbf{I} - \textbf{P}_{\text{TT}} \right)^{-1}
+\label{eq:ff}
+\end{align}
+
+Using the previous equation \eqref{eq:ff} that the expected length of the random walk getting absorbed can be computed using the following vector:
+
+\begin{align}
+\textbf{L} = \textbf{L}_C = \left( \begin{array}{c} \textbf{F} \\  \textbf{0} \end{array} \right) \textbf{1} \nonumber
+\end{align}
+
+The final measure is achieved by summing over all nodes in Q. 
+
+\begin{align}
+C_{RWA} = \textbf{s}^{\text{T}}\textbf{L}_C
+\label{eq:rwa}
+\end{align}
+
+ However, this measure comes with a cost. Not only follows from equation \eqref{eq:ff} that each computation has to be done inverting a matrix, which can be computationally expensive, but also we have to optimize this procedure over different choices of C.
+
+\pagebreak
+\subsection{Biased random walk centrality}
+
+As stated in section 1. this paper has a slightly different approach. Algorithm one gives a pseudo code for the biased random walk centrality. The algorithm requires as input an unweighted Graph - G, the number of "random" steps done - N, a weighting parameter - $\alpha$ (exact meaning see later on) and a probability bound - $p$. In the first step assign zero as centrality to all nodes. Then run the algorithm for N steps (where N should be much larger than number of nodes). Per iteration update the value of the current node. Then sample a uniform number between zero and one. If this number is higher than the threshold pick a node randomly of the set of nodes. If not pick the next node according to the BiasSelectFrom() function which selects the next node according to the probability computed in \eqref{eq:pbs}. After N steps the functions returns a vector with prominence values for each node. 
+
+\IncMargin{1em}
+\begin{algorithm}
+	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
+	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
+	\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+	\Input{G,N,$\alpha$,p}
+	\Output{Importance values for each node $v$}
+	\BlankLine
+	\For{$v \in V$}{
+		f(v) = 0
+	}
+	\ 
+	i = 0\;
+	v = RandomNodeFrom(V) \;
+	\While{$i<N$}{
+		$f(v) \leftarrow f(v) + \frac{1}{N}$ \;
+		\eIf{\textbf{rand}(0,1)$<$p}{
+			v $\leftarrow$ BiasSelectFrom(N(v),$\alpha$)}{
+			v $\leftarrow$ RandomSelectFrom(V)}
+		i $ \leftarrow$ i + 1
+	}
+	\Return{f(v)}
+	\caption{Guided Random Walk}\label{algo_disjdecomp}
+\end{algorithm}\DecMargin{1em}
+
+For defining the BiasSelectFrom() function we may first introduce two necessary concepts. First we define the importance of a node based on the number of connections. This stems from the fact that the number of connections might be a important prominence indicator in the context of social networks.
+
+\begin{align}
+f_{deg}(v) = 1 - \frac{1}{|N(v)|}
+\label{eq:dg}
+\end{align}
+
+However, this concept can be extended. The authors define \textit{neighberhood density} as:
+
+\begin{align}
+f_{nd}(v) &= 1 - \sum_{w \in N(v)} \frac{|N(w) \cap N(v) | }{(|N(w)| - 1) |N(v)|} \nonumber \\
+&=  1 - \sum_{w \in N(v)} \frac{|N(w) \cap N(v) | }{(\text{d}_w - 1) \text{d}_v} 
+\label{eq:nd}
+\end{align}
+
+Finally the last two equations are used to compute the probability for the BiasSelectFrom() function. The parameter $\alpha$ controls the how much should be given to the prominence concepts in equation \eqref{eq:dg} and  \eqref{eq:nd}. Setting $\alpha$ close to one will result in values close to degree centrality. Hence we compute the probability of a node $w \in N(v)$ to be chosen as follows, which is the basis to execute the BiasSelecFrom().
+
+\begin{align}
+\mathbb{P}(w) = \frac{\alpha f_{deg}(w) + (1-\alpha)f_{nd}(w)}{\sum_{u \in N(v)} (\alpha f_{deg}(u) + (1-\alpha) f_{nd}(u) ) }
+\label{eq:pbs}
+\end{align}
+
+\pagebreak
+% ----------------------------------------------------------------------------------------------------------
+% Literature
+% ----------------------------------------------------------------------------------------------------------
+
+\renewcommand\refname{List of Literature}
+
+\bibliographystyle{apalike}
+
+\bibliography{Networks}
+
+
+\end{document}
