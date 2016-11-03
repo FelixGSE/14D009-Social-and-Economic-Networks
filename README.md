@@ -1,6 +1,6 @@
 Repository for social networks class
 
-## Content:
+## Course content:
 
 - Random Graphs
 - Centrality Measures (Shortest path centrality measures, Eigenvector Centrality, PageRank, etc.)
