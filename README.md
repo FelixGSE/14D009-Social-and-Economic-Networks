@@ -1,5 +1,3 @@
-Repository for social networks class
-
 ## Course content:
 
 - Random Graphs
